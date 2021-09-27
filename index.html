@@ -1,0 +1,789 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<link rel="icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAACUWAAAlFgAAAAAAAAAAAACoAAD/qAAA/6gAAP+oAAD/qAAA/6gAAP+oAAD/qAAA/6gAAP+oAAD/qAAA/6gAAP///////////////////////////6gAAP+oAAD/qAAA/6gAAP+oAAD/qAAA/6gAAP+oAAD/qAAA////////////////AP///wD///8A////AP////+oAAD/qAAA/6gAAP+oAAD/qAAA/6gAAP+oAAD/qAAA//////////8A////AP///wD///8A////AP///wD///8A/////6gAAP+oAAD/qAAA/6gAAP+oAAD/qAAA//////////8A////AP///wD///8A////AP////////8A////AP////+oAAD/qAAA/6gAAP+oAAD/qAAA/6gAAP//////////AP///wD///8A////AP///wD///8A/////////wD///8A/////6gAAP+oAAD/qAAA/6gAAP+oAAD//////////wD///8A////AP///wD///8A/////////wD///8A////AP////+oAAD/qAAA/6gAAP+oAAD/qAAA/6gAAP//////////AP///wD///8A/////6gAAP//////////AP///wD///8A/////6gAAP+oAAD/qAAA/6gAAP+oAAD/qAAA/////////////////6gAAP+oAAD//////////wD///8A////AP///wD/////qAAA/6gAAP+oAAD/qAAA/6gAAP+oAAD/qAAA/6gAAP+oAAD///////////////8A////AP///wD///8A////AP//////////qAAA/6gAAP+oAAD/qAAA/6gAAP////////////////////8A////AP///wD///8A////AP///wD///8A////AP//////////////////////////////////////////////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP//////////////////////////////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8A////AP///wD///8AAAAAAAAPAAAAPwAAgH0AAIB+AADAfQAAwDgAAOAAAADwAAAA+AEAAP4BAAD/gwAA//8AAP//AAD//wAA//8AAA=="/>
+		<link rel="apple-touch-icon-precomposed" href="apple-touch-icon.png" />
+		<title>Great Lakes Surf Forecast</title>
+	<style>
+		body
+			{text-align: center;background-color:#EEE5E9;}
+		p 
+			{margin:0px;padding:0px;}
+		table
+			{border:0px solid #7C7C7C;border-collapse:collapse;border-spacing:0px;padding:0px;}
+		td
+			{border:none;padding:0px;}
+		canvas
+			{display:block;padding:0px;margin:auto;}
+		#main_table 
+			{margin-left:auto;margin-right:auto;text-align:center;}
+		#row1
+			{background-color:#EEE5E9;font-family:serif;color:#7C7C7C;font-size:12px;}
+		#white_bg
+			{background-color:white;}
+		a:link 		
+			{color:#D64933;text-decoration:none;}
+		a:visited 	
+			{color:#D64933;text-decoration:none;}
+		a:hover 	
+			{color:#92DCE5;text-decoration:none;}
+		a:active 	
+			{color:#EEE5E9;text-decoration:none;}
+		#box_td
+			{border:none;}
+		#footer_table
+			{border:1px solid black;background-color:white;margin-left:auto;margin-right:auto;text-align:center;border-collapse:collapse;}
+		#logo
+			{color:black;font-size:35px;font-family:sans-serif;font-weight:lighter;}
+		#beta
+			{font-size:10px;color:darkorange;font-family:serif;vertical-align:150%;}
+		#footer
+			{font-size:12px;}
+		#wave_h
+			{font-size:15px;}
+			/*wave height text*/
+		#wave_f
+			{font-size:10px;color:blue;}
+			/*feet text*/
+		#howto
+			{font-size:15px;}
+	</style>
+	<script>
+		function init () {	
+
+
+		//surf spot locations
+
+			var st_w=393 
+			var st_h=181
+			
+			var cl_w=676 
+			var cl_h=131
+			var gb_w=429 
+			var gb_h=459
+			var ki_w=444
+			var ki_h=334
+			var su_w=472
+			var su_h=285
+			var mn_w=390
+			var mn_h=160
+			var wa_w=592
+			var wa_h=285
+			
+			var ha_w=125
+			var ha_h=353
+			var to_w=205
+			var to_h=260
+			var cg_w=402
+			var cg_h=186
+			var sb_w=528
+			var sb_h=188
+			
+		//legend and time updated
+			
+			for (var i = 0; i < 1; i++)
+				{
+		    let ctx=document.getElementById("canvas_w_legend").getContext("2d");
+		    let img=new Image();
+		    img.onload=function(){ctx.drawImage(img,140,425,820,615,0,0,820,615);}
+		    img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwv+01.gif";
+				}
+			for (var i = 0; i < 1; i++)
+				{
+		    let ctx=document.getElementById("canvas_time_up").getContext("2d");
+		    let img=new Image();
+		    img.onload=function(){ctx.drawImage(img,16,590,820,615,0,0,820,615);}
+		    img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewv+01.gif";
+				}
+					
+			
+		//hours 1-9
+			
+			for (var i = 1; i < 10; i++)
+				{
+		    let ctx=document.getElementById("canvas_time_"+i).getContext("2d");
+		    let img=new Image();
+		    img.onload=function(){ctx.drawImage(img,520,487,820,615,0,0,820,615);}
+		    img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+0"+i+".gif";
+				}
+				
+			for (var i = 1; i < 10; i++)
+				{
+		    let ctx=document.getElementById("canvas_st_"+i).getContext("2d");
+		    let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+		    img.onload=function(){ctx.drawImage(img,st_w,st_h,820,615,0,0,1640,1230);}
+		    img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewv+0"+i+".gif";
+				}
+				
+			for (var i = 1; i < 10; i++)
+				{
+			let ctx=document.getElementById("canvas_cl_"+i).getContext("2d");
+			let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+			img.onload=function(){ctx.drawImage(img,cl_w,cl_h,820,615,0,0,1640,1230);}
+			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewv+0"+i+".gif";
+				}
+
+			for (var i = 1; i < 10; i++)
+				{
+			let ctx=document.getElementById("canvas_gb_"+i).getContext("2d");
+			let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+			img.onload=function(){ctx.drawImage(img,gb_w,gb_h,820,615,0,0,1640,1230);}
+			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwv+0"+i+".gif";
+				}
+			
+			for (var i = 1; i < 10; i++)
+				{
+			let ctx=document.getElementById("canvas_ki_"+i).getContext("2d");
+			let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+			img.onload=function(){ctx.drawImage(img,ki_w,ki_h,820,615,0,0,1640,1230);}
+			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwv+0"+i+".gif";
+				}
+				
+			for (var i = 1; i < 10; i++)
+				{
+			let ctx=document.getElementById("canvas_su_"+i).getContext("2d");
+			let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+			img.onload=function(){ctx.drawImage(img,su_w,su_h,820,615,0,0,1640,1230);}
+			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwv+0"+i+".gif";
+				}
+				
+			for (var i = 1; i < 10; i++)
+				{
+			let ctx=document.getElementById("canvas_mn_"+i).getContext("2d");
+			let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+			img.onload=function(){ctx.drawImage(img,mn_w,mn_h,820,615,0,0,1640,1230);}
+			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwv+0"+i+".gif";
+				}
+				
+			for (var i = 1; i < 10; i++)
+				{
+			let ctx=document.getElementById("canvas_wa_"+i).getContext("2d");
+			let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+			img.onload=function(){ctx.drawImage(img,wa_w,wa_h,820,615,0,0,1640,1230);}
+			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwv+0"+i+".gif";
+				}
+			
+			for (var i = 1; i < 10; i++)
+				{
+			let ctx=document.getElementById("canvas_ha_"+i).getContext("2d");
+			let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+			img.onload=function(){ctx.drawImage(img,ha_w,ha_h,820,615,0,0,1640,1230);}
+			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+0"+i+".gif";
+				}
+				
+			for (var i = 1; i < 10; i++)
+				{
+			let ctx=document.getElementById("canvas_to_"+i).getContext("2d");
+			let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+			img.onload=function(){ctx.drawImage(img,to_w,to_h,820,615,0,0,1640,1230);}
+			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+0"+i+".gif";
+				}
+				
+			for (var i = 1; i < 10; i++)
+				{
+			let ctx=document.getElementById("canvas_cg_"+i).getContext("2d");
+			let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+			img.onload=function(){ctx.drawImage(img,cg_w,cg_h,820,615,0,0,1640,1230);}
+			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+0"+i+".gif";
+				}
+				
+			for (var i = 1; i < 10; i++)
+				{
+			let ctx=document.getElementById("canvas_sb_"+i).getContext("2d");
+			let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+			img.onload=function(){ctx.drawImage(img,sb_w,sb_h,820,615,0,0,1640,1230);}
+			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+0"+i+".gif";
+				}	
+
+		//hours 10-62
+			
+			for (var i = 10; i < 63; i++)
+				{
+		    let ctx=document.getElementById("canvas_time_"+i).getContext("2d");
+		    let img=new Image();
+		    img.onload=function(){ctx.drawImage(img,520,487,820,615,0,0,820,615);}
+		    img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+"+i+".gif";
+				}
+				
+			for (var i = 10; i < 63; i++)
+				{
+		    let ctx=document.getElementById("canvas_st_"+i).getContext("2d");
+		    let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+		    img.onload=function(){ctx.drawImage(img,st_w,st_h,820,615,0,0,1640,1230);}
+		    img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewv+"+i+".gif";
+				}
+				
+			for (var i = 10; i < 63; i++)
+				{
+			let ctx=document.getElementById("canvas_cl_"+i).getContext("2d");
+			let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+			img.onload=function(){ctx.drawImage(img,cl_w,cl_h,820,615,0,0,1640,1230);}
+			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewv+"+i+".gif";
+				}
+
+			for (var i = 10; i < 63; i++)
+				{
+			let ctx=document.getElementById("canvas_gb_"+i).getContext("2d");
+			let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+			img.onload=function(){ctx.drawImage(img,gb_w,gb_h,820,615,0,0,1640,1230);}
+			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwv+"+i+".gif";
+				}
+			
+			for (var i = 10; i < 63; i++)
+				{
+			let ctx=document.getElementById("canvas_ki_"+i).getContext("2d");
+			let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+			img.onload=function(){ctx.drawImage(img,ki_w,ki_h,820,615,0,0,1640,1230);}
+			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwv+"+i+".gif";
+				}
+				
+			for (var i = 10; i < 63; i++)
+				{
+			let ctx=document.getElementById("canvas_su_"+i).getContext("2d");
+			let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+			img.onload=function(){ctx.drawImage(img,su_w,su_h,820,615,0,0,1640,1230);}
+			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwv+"+i+".gif";
+				}
+				
+			for (var i = 10; i < 63; i++)
+				{
+			let ctx=document.getElementById("canvas_mn_"+i).getContext("2d");
+			let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+			img.onload=function(){ctx.drawImage(img,mn_w,mn_h,820,615,0,0,1640,1230);}
+			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwv+"+i+".gif";
+				}
+				
+			for (var i = 10; i < 63; i++)
+				{
+			let ctx=document.getElementById("canvas_wa_"+i).getContext("2d");
+			let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+			img.onload=function(){ctx.drawImage(img,wa_w,wa_h,820,615,0,0,1640,1230);}
+			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwv+"+i+".gif";
+				}
+			
+			for (var i = 10; i < 63; i++)
+				{
+			let ctx=document.getElementById("canvas_ha_"+i).getContext("2d");
+			let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+			img.onload=function(){ctx.drawImage(img,ha_w,ha_h,820,615,0,0,1640,1230);}
+			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+"+i+".gif";
+				}
+				
+			for (var i = 10; i < 63; i++)
+				{
+			let ctx=document.getElementById("canvas_to_"+i).getContext("2d");
+			let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+			img.onload=function(){ctx.drawImage(img,to_w,to_h,820,615,0,0,1640,1230);}
+			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+"+i+".gif";
+				}
+				
+			for (var i = 10; i < 63; i++)
+				{
+			let ctx=document.getElementById("canvas_cg_"+i).getContext("2d");
+			let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+			img.onload=function(){ctx.drawImage(img,cg_w,cg_h,820,615,0,0,1640,1230);}
+			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+"+i+".gif";
+				}
+				
+			for (var i = 10; i < 63; i++)
+				{
+			let ctx=document.getElementById("canvas_sb_"+i).getContext("2d");
+			let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+			img.onload=function(){ctx.drawImage(img,sb_w,sb_h,820,615,0,0,1640,1230);}
+			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+"+i+".gif";
+				}	
+
+		//hours 63-120
+
+			for (var i = 63; i < 121; i = i + 3 )
+				{
+		    let ctx=document.getElementById("canvas_time_"+i).getContext("2d");
+		    let img=new Image();
+		    img.onload=function(){ctx.drawImage(img,520,487,820,615,0,0,820,615);}
+		    img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+"+i+".gif";
+				}
+				
+			for (var i = 63; i < 121; i = i + 3 )
+				{
+		    let ctx=document.getElementById("canvas_st_"+i).getContext("2d");
+		    let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+		    img.onload=function(){ctx.drawImage(img,st_w,st_h,820,615,0,0,1640,1230);}
+		    img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewv+"+i+".gif";
+				}
+				
+			for (var i = 63; i < 121; i = i + 3 )
+				{
+			let ctx=document.getElementById("canvas_cl_"+i).getContext("2d");
+			let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+			img.onload=function(){ctx.drawImage(img,cl_w,cl_h,820,615,0,0,1640,1230);}
+			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewv+"+i+".gif";
+				}
+
+			for (var i = 63; i < 121; i = i + 3 )
+				{
+			let ctx=document.getElementById("canvas_gb_"+i).getContext("2d");
+			let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+			img.onload=function(){ctx.drawImage(img,gb_w,gb_h,820,615,0,0,1640,1230);}
+			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwv+"+i+".gif";
+				}
+			
+			for (var i = 63; i < 121; i = i + 3 )
+				{
+			let ctx=document.getElementById("canvas_ki_"+i).getContext("2d");
+			let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+			img.onload=function(){ctx.drawImage(img,ki_w,ki_h,820,615,0,0,1640,1230);}
+			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwv+"+i+".gif";
+				}
+				
+			for (var i = 63; i < 121; i = i + 3 )
+				{
+			let ctx=document.getElementById("canvas_su_"+i).getContext("2d");
+			let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+			img.onload=function(){ctx.drawImage(img,su_w,su_h,820,615,0,0,1640,1230);}
+			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwv+"+i+".gif";
+				}
+				
+			for (var i = 63; i < 121; i = i + 3 )
+				{
+			let ctx=document.getElementById("canvas_mn_"+i).getContext("2d");
+			let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+			img.onload=function(){ctx.drawImage(img,mn_w,mn_h,820,615,0,0,1640,1230);}
+			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwv+"+i+".gif";
+				}
+				
+			for (var i = 63; i < 121; i = i + 3 )
+				{
+			let ctx=document.getElementById("canvas_wa_"+i).getContext("2d");
+			let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+			img.onload=function(){ctx.drawImage(img,wa_w,wa_h,820,615,0,0,1640,1230);}
+			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwv+"+i+".gif";
+				}
+			
+			for (var i = 63; i < 121; i = i + 3 )
+				{
+			let ctx=document.getElementById("canvas_ha_"+i).getContext("2d");
+			let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+			img.onload=function(){ctx.drawImage(img,ha_w,ha_h,820,615,0,0,1640,1230);}
+			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+"+i+".gif";
+				}
+				
+			for (var i = 63; i < 121; i = i + 3 )
+				{
+			let ctx=document.getElementById("canvas_to_"+i).getContext("2d");
+			let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+			img.onload=function(){ctx.drawImage(img,to_w,to_h,820,615,0,0,1640,1230);}
+			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+"+i+".gif";
+				}
+				
+			for (var i = 63; i < 121; i = i + 3 )
+				{
+			let ctx=document.getElementById("canvas_cg_"+i).getContext("2d");
+			let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+			img.onload=function(){ctx.drawImage(img,cg_w,cg_h,820,615,0,0,1640,1230);}
+			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+"+i+".gif";
+				}
+				
+			for (var i = 63; i < 121; i = i + 3 )
+				{
+			let ctx=document.getElementById("canvas_sb_"+i).getContext("2d");
+			let img=new Image();
+			ctx.mozImageSmoothingEnabled = false;
+			ctx.webkitImageSmoothingEnabled = false;
+			ctx.msImageSmoothingEnabled = false;
+			ctx.imageSmoothingEnabled = false;
+			img.onload=function(){ctx.drawImage(img,sb_w,sb_h,820,615,0,0,1640,1230);}
+			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+"+i+".gif";
+				}	
+			}
+		document.addEventListener('DOMContentLoaded', init)
+	</script>
+</head>
+<body>
+	<br>
+	<span id="logo">&nbsp;&nbsp;Great Lakes Surf Forecast</span>&nbsp;&nbsp;<span id="beta"><i>BETA</i></span>
+	<br>
+	<br>
+		<table id="main_table">
+			
+			<tr id="row1">
+				<td></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/port-stanley_lake-erie/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Stanley</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/point_abino_lake_erie/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Wyldewood</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/grand_bend/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Grand Bend</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/huron_ridge_kincardine/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Kincardine</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/lake_huron_sauble_beach/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Sauble</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/cove_island_lake_huron/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Manitoulin</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/wasaga_beach/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Wasaga</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/burlington_piers/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Hamilton</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/cathedral_bluffers_park/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Toronto</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/cobourg/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Coburg</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/sandbanks_point_petre/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Sandbanks</a></td>
+			</tr>
+			
+				<script>
+					for (var i = 1; i < 13; i++) {
+				document.write("<tr><td id=\"white_bg\"><canvas id=\"canvas_time_"+i+"\" width=195 height=12></canvas></td>");
+		    	document.write("<td><canvas id=\"canvas_st_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_cl_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_gb_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_ki_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_su_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_mn_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_wa_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_ha_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_to_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_cg_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_sb_"+i+"\"  width=65 height=65></canvas></td></tr>");
+						}
+					</script>
+						
+			<tr id="row1">
+				<td></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/port-stanley_lake-erie/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Stanley</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/point_abino_lake_erie/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Wyldewood</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/grand_bend/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Grand Bend</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/huron_ridge_kincardine/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Kincardine</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/lake_huron_sauble_beach/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Sauble</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/cove_island_lake_huron/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Manitoulin</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/wasaga_beach/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Wasaga</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/burlington_piers/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Hamilton</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/cathedral_bluffers_park/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Toronto</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/cobourg/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Coburg</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/sandbanks_point_petre/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Sandbanks</a></td>
+			</tr>
+					
+				<script>
+					for (var i = 13; i < 25; i++) {
+				document.write("<tr><td id=\"white_bg\"><canvas id=\"canvas_time_"+i+"\" width=195 height=12></canvas></td>");
+		    	document.write("<td><canvas id=\"canvas_st_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_cl_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_gb_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_ki_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_su_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_mn_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_wa_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_ha_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_to_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_cg_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_sb_"+i+"\"  width=65 height=65></canvas></td></tr>");
+						}
+					</script>
+
+			<tr id="row1">
+				<td></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/port-stanley_lake-erie/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Stanley</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/point_abino_lake_erie/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Wyldewood</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/grand_bend/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Grand Bend</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/huron_ridge_kincardine/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Kincardine</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/lake_huron_sauble_beach/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Sauble</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/cove_island_lake_huron/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Manitoulin</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/wasaga_beach/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Wasaga</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/burlington_piers/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Hamilton</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/cathedral_bluffers_park/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Toronto</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/cobourg/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Coburg</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/sandbanks_point_petre/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Sandbanks</a></td>
+			</tr>
+					
+				<script>
+					for (var i = 25; i < 37; i++) {
+				document.write("<tr><td id=\"white_bg\"><canvas id=\"canvas_time_"+i+"\" width=195 height=12></canvas></td>");
+		    	document.write("<td><canvas id=\"canvas_st_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_cl_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_gb_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_ki_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_su_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_mn_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_wa_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_ha_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_to_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_cg_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_sb_"+i+"\"  width=65 height=65></canvas></td></tr>");
+						}
+					</script>
+
+			<tr id="row1">
+				<td></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/port-stanley_lake-erie/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Stanley</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/point_abino_lake_erie/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Wyldewood</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/grand_bend/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Grand Bend</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/huron_ridge_kincardine/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Kincardine</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/lake_huron_sauble_beach/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Sauble</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/cove_island_lake_huron/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Manitoulin</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/wasaga_beach/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Wasaga</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/burlington_piers/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Hamilton</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/cathedral_bluffers_park/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Toronto</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/cobourg/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Coburg</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/sandbanks_point_petre/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Sandbanks</a></td>
+			</tr>
+					
+				<script>
+					for (var i = 37; i < 49; i++) {
+				document.write("<tr><td id=\"white_bg\"><canvas id=\"canvas_time_"+i+"\" width=195 height=12></canvas></td>");
+		    	document.write("<td><canvas id=\"canvas_st_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_cl_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_gb_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_ki_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_su_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_mn_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_wa_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_ha_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_to_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_cg_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_sb_"+i+"\"  width=65 height=65></canvas></td></tr>");
+						}
+					</script>
+
+			<tr id="row1">
+				<td></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/port-stanley_lake-erie/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Stanley</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/point_abino_lake_erie/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Wyldewood</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/grand_bend/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Grand Bend</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/huron_ridge_kincardine/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Kincardine</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/lake_huron_sauble_beach/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Sauble</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/cove_island_lake_huron/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Manitoulin</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/wasaga_beach/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Wasaga</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/burlington_piers/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Hamilton</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/cathedral_bluffers_park/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Toronto</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/cobourg/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Coburg</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/sandbanks_point_petre/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Sandbanks</a></td>
+			</tr>
+					
+				<script>
+					for (var i = 49; i < 63; i++) {
+				document.write("<tr><td id=\"white_bg\"><canvas id=\"canvas_time_"+i+"\" width=195 height=12></canvas></td>");
+		    	document.write("<td><canvas id=\"canvas_st_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_cl_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_gb_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_ki_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_su_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_mn_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_wa_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_ha_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_to_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_cg_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_sb_"+i+"\"  width=65 height=65></canvas></td></tr>");
+						}
+					</script>
+
+
+			<tr id="row1">
+				<td></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/port-stanley_lake-erie/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Stanley</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/point_abino_lake_erie/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Wyldewood</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/grand_bend/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Grand Bend</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/huron_ridge_kincardine/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Kincardine</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/lake_huron_sauble_beach/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Sauble</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/cove_island_lake_huron/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Manitoulin</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/wasaga_beach/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Wasaga</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/burlington_piers/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Hamilton</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/cathedral_bluffers_park/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Toronto</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/cobourg/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Coburg</a></td>
+				<td><a href="https://www.windfinder.com/weatherforecast/sandbanks_point_petre/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Sandbanks</a></td>
+			</tr>
+					
+				<script>
+					for (var i = 63; i < 121; i = i + 3) {
+				document.write("<tr><td id=\"white_bg\"><canvas id=\"canvas_time_"+i+"\" width=195 height=12></canvas></td>");
+		    	document.write("<td><canvas id=\"canvas_st_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_cl_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_gb_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_ki_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_su_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_mn_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_wa_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_ha_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_to_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_cg_"+i+"\"  width=65 height=65></canvas></td>");
+				document.write("<td><canvas id=\"canvas_sb_"+i+"\"  width=65 height=65></canvas></td></tr>");
+						}
+					
+					</script>					
+							
+		</table>
+			<br>
+		<table id="footer_table">
+			<tr>
+				<td><div id="wave_h">&nbsp;&nbsp;Wave Height&nbsp;&nbsp;</div>	
+					<canvas id="canvas_w_legend" width=80 height=85></canvas></td>
+				</tr>
+				<tr>	
+					<td id="box_td"><div id="wave_f">(feet)</div></td>
+			</tr>
+		</table>
+		<br>
+		<table id="footer_table">
+			<tr>
+				<td>
+			<div id="footer">
+			<script>
+				now = new Date();
+				utctime = now.toUTCString();
+				document.write("Current time: " + utctime );
+			</script>
+			<canvas id="canvas_time_up" width=290 height=12></canvas>
+			&nbsp;&nbsp;updated at 00:50/12:50 GMT (08:50/20:50 EDT) (07:50/19:50 EST)&nbsp;&nbsp;
+					</div>
+				</td>
+			</tr>
+		</table>
+			<div id="footer">
+			<br><br><br><br>
+			<table id="footer_table">
+				<tr>
+					<td>
+			<br><span id="howto">README</span>
+			<br>
+			<br>click on spot for period forecast
+			<br><br><a href="https://www.glerl.noaa.gov/res/glcfs/glcfs.html">data from glcfs</a>
+			<br>
+			<br>forecast maps
+			<br>
+			&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.glerl.noaa.gov/res/glcfs/glcfs.php?lake=e&ext=wv&type=F&hr=01">lake erie</a>&nbsp;&nbsp;&nbsp;
+			<a href="https://www.glerl.noaa.gov/res/glcfs/glcfs.php?lake=h&ext=wv&type=F&hr=01">lake huron</a>&nbsp;&nbsp;&nbsp;
+			<a href="https://www.glerl.noaa.gov/res/glcfs/glcfs.php?lake=o&ext=wv&type=F&hr=01">lake ontario</a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<br><br>additional resources
+			<br><a href="http://surfradar.info/index/myspots/0-37?SelectorTable_length=50&spot=portstanley&spot=portcolborne&spot=sarnia&spot=grandbend&spot=kincardine&spot=saublebeach&spot=wasaga&spot=fiftypoint&spot=hamilton&spot=toronto&spot=oshawa&spot=cobourg&spot=sandbankspp#surfData">surfradar</a>&nbsp;&nbsp;
+			<a href="https://surfthegreats.org/pages/faq">surfthegreats</a>&nbsp;&nbsp;
+			<a href="http://lakeswell.com/">lakeswell</a>
+			<br>
+			<br>
+			<br>built by michal krupski
+			<br><a href="https://Github.com">powered by github</a>
+			<br>v0.6.8
+			<br>&starf;<br><br>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<br><br><br><br>
+	</body>
+</html>
