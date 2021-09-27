@@ -5,7 +5,6 @@
 Todo  
 -add wind to forecast chart  
 -add Point Pelee to forecast chart  
--change colour scheme  
   
   
 👋 Mike Krupski
