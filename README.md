@@ -1,6 +1,6 @@
 # Lakes.Surf
 
-🌊 Welcome to the code repository of lakes.surf 🌊  
+🌊 Welcome to the code repository of [lakes.surf](https://lakes.surf) 🌊  
   
 Todo  
 -add wind to forecast chart  
