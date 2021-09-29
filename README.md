@@ -26,4 +26,7 @@ Hi 👋 I’m Mike. I built this site to help 🇨🇦 Canadian Great Lakes Surf
 -add Point Pelee to forecast chart  
   
 By Michal (Mike) Krupski  
-[CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/)
+[CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/)  
+  
+Suggestions/Issues/Errors:  
+lakessurf -at- gmail -dot- com
