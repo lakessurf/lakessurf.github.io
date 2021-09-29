@@ -20,6 +20,8 @@
 			{border:none;padding:0px;}
 		canvas
 			{display:block;padding:0px;margin:auto;}
+		summary
+			{color:#D64933;display: block;}
 		#main_table 
 			{margin-left:auto;margin-right:auto;text-align:center;}
 		#row1
@@ -56,6 +58,8 @@
 			{font-size:15px;}
 		#neptune
 			{font-size:40px;}
+		#spots
+			{color:#D64933;}
 	</style>
 	<script>
 		function init () {	
@@ -758,7 +762,8 @@
 				document.write("Current time: " + utctime );
 			</script>
 			<canvas id="canvas_time_up" width=290 height=12></canvas>
-			&nbsp;&nbsp;updated at 00:50/12:50 GMT (08:50/20:50 EDT) (07:50/19:50 EST)&nbsp;&nbsp;
+			Updated at 00:50/12:50 GMT 
+			<br>(08:50/20:50 EDT) (07:50/19:50 EST)
 			<br>
 			<script>
 				var d = new Date();
@@ -785,9 +790,12 @@
 			<table id="footer_table">
 				<tr>
 					<td>
-			<br><br><span id="howto">README</span>
+			<br><span id="howto">README</span>
+			<br>Click on spot name for 
+			<br>wave period forecast
 			<br>
-			<br>Click on spot for wave period forecast
+			<br>For iOS App click Share Button
+			<br>then Add to Home Screen
 			<br><br><a href="https://www.glerl.noaa.gov/res/glcfs/glcfs.html">Data from GLCFS</a>
 			<br>
 			<br>Forecast Maps
@@ -799,12 +807,125 @@
 			<br><a href="http://surfradar.info/index/myspots/0-37?SelectorTable_length=50&spot=portstanley&spot=portcolborne&spot=sarnia&spot=grandbend&spot=kincardine&spot=saublebeach&spot=wasaga&spot=fiftypoint&spot=hamilton&spot=toronto&spot=oshawa&spot=cobourg&spot=sandbankspp#surfData">SurfRadar</a>&nbsp;&nbsp;
 			<a href="https://surfthegreats.org/pages/faq">SurfTheGreats</a>&nbsp;&nbsp;
 			<a href="http://lakeswell.com/">LakeSwell</a>
+			<br><br><br><br>
+			
+			<details>
+				<summary>Spots</summary>
+					<details>
+						<summary><span id="spots"> Lake Erie</span></summary>
+						Seacliffe Beach
+						<br>Pelee Island
+						<br>&starf;Point Pelee National Park
+						<br>Wheatley Provincial Park
+						<br>Erieau Beach
+						<br>&starf;Rondeau Provincial Park
+						<br>Duttona Beach
+						<br>John E. Pearce Provincial Park
+						<br>&starf;Little Beach Port Stanley
+						<br>Main Beach Port Stanley
+						<br>Port Bruce Provincial Park
+						<br>Port Burwell Provincial Park
+						<br>&starf;Long Point Provincial Park
+						<br>Port Dover Beach
+						<br>Selkirk Provincial Park
+						<br>James N. Allen Provincial Park
+						<br>Rock Point Provincial Park
+						<br>Nickel Beach
+						<br>&starf;Wyldewood Beach
+						<br>Pleasant Beach
+						<br>&starf;Crystal Beach Waterfront Park
+						<br>
+					</details>
+					<details>
+						<summary><span id="spots"> Lake Huron</span></summary>
+						Canatara Beach
+						<br>Murphy Road Beach 
+						<br>Brights Grove Beach
+						<br>Windcliff Lane Beach
+						<br>Highland Glen Conservation Area
+						<br>Kettle Point
+						<br>&starf;Ipperwash Beach
+						<br>Pinery Provincial Park
+						<br>&starf;Grand Bend Beach
+						<br>&starf;Bayfield Pier Beach
+						<br>Goderich Rotary Cove Beach
+						<br>Point Farms Provincial Park
+						<br>Port Albert Beach
+						<br>Point Clark Beach
+						<br>&starf;Kincardine Station Beach
+						<br>&starf;Inverhuron Provincial Park
+						<br>MacGregor Point Provincial Park
+						<br>Southampton Beach
+						<br>&starf;Sauble Beach
+						<br>Black Creek Provincial Park
+						<br>Michael’s Bay
+						<br>Carter Bay
+						<br>&starf;Providence Bay
+						<br>Misery Bay
+						<br>Sand Bay
+						<br>Craigleith Provincial Park
+						<br>Northwinds Beach
+						<br>Sunset Point Beach
+						<br>&starf;Wasaga Beach
+						<br>Belle-eau-Claire Beach
+						<br>
+					</details>
+					<details>
+					<summary><span id="spots"> Lake Ontario</span></summary>
+						Ryerson Park
+						<br>Niagara Shores Park
+						<br>Jones Beach
+						<br>Port Weller Beach
+						<br>St. Catharines Lakeside Park Beach
+						<br>&starf;Fifty Road Beach
+						<br>&starf;Van Wagners Beach
+						<br>&starf;Hamilton Beach
+						<br>&starf;Beachway Park
+						<br>Sioux Lookout Park
+						<br>Jack Darling Park
+						<br>Tommy Thompson Park Point
+						<br>&starf;Ashbridges Bay Park
+						<br>R.C. Harris Secret Beach
+						<br>&starf;Bluffers Park
+						<br>Rogue Beach
+						<br>Frenchman's Bay Beach
+						<br>&starf;Oshawa Lakeview Park Beach
+						<br>Darlington Provincial Park
+						<br>Port Darlington West Beach
+						<br>Bond Head Beach
+						<br>Port Hope East Beach
+						<br>&starf;Cobourg Beach
+						<br>Wickalow Beach
+						<br>&starf;Presqu'ile Provincial Park
+						<br>North Beach Provincial Park
+						<br>&starf;Sandbanks Provincial Park
+						<br>Point Petre
+						<br>Patterson Park
+						<br>McDonald Park
+						<br>Reeds Bay
+						<br>Big Sandy Bay Beach
+						<br>
+					</details>
+					<details>
+						<summary><span id="spots"> Lake Superior</span></summary>
+						Hydro Bay
+						<br>&starf;Terrace Bay Beach
+						<br>Pumphouse Beach
+						<br>&starf;Neys Provincial Park
+						<br>Marathon Pebble Beach
+						<br>Pukaskwa National Park
+						<br>Michipicoten River
+						<br>Montreal River Harbour
+						<br>Alona Bay
+						<br>Hibbard Bay
+					</details>
+			</details>
 			<br>
 			<br>&starf;
 			<br>By Mike Krupski
 			<br><a href="https://github.com/lakessurf/lakessurf.github.io">Powered by Github</a>
 			<br><a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
-			<br>v0.7.4
+			<br>v0.7.5
 			<br><span id="neptune"><br>&#9798;</span><br><br><br>
 					</div>
 				</td>
