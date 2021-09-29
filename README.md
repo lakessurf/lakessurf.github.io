@@ -9,7 +9,7 @@ Hi 👋 I’m Mike. I built this site to help 🇨🇦 Canadian Great Lakes Surf
 -Domain name from rebel.ca (only ongoing cost)
 -Cloudflare for DNS and cache  
 -GitHub for web hosting and source code control  
--HTML/CSS/JS
+-HTML/CSS/JS  
 -[GLCFS](https://www.glerl.noaa.gov/res/glcfs/glcfs.html) (Great Lakes Coastal Forecasting System) Data
 
 🎉Features  
