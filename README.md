@@ -29,4 +29,4 @@ By Michal (Mike) Krupski
 [CC BY-SA](https://creativecommons.org/licenses/by-sa/4.0/)  
   
 Suggestions/Issues/Errors:  
-lakessurf -at- gmail -dot- com
+lakessurf 🌊 gmail 🌊 com
