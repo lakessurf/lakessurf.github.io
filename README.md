@@ -6,7 +6,7 @@ Hi 👋 I’m Mike. I built this site to help 🇨🇦 Canadian Great Lakes Surf
   
 🛠Tools Used
   
--Domain name from rebel.ca (only ongoing cost)
+-Domain name from rebel.ca (only ongoing cost)  
 -Cloudflare for DNS and cache  
 -GitHub for web hosting and source code control  
 -HTML/CSS/JS  
