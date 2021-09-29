@@ -757,6 +757,23 @@
 			</script>
 			<canvas id="canvas_time_up" width=290 height=12></canvas>
 			&nbsp;&nbsp;updated at 00:50/12:50 GMT (08:50/20:50 EDT) (07:50/19:50 EST)&nbsp;&nbsp;
+			<br>
+			<script>
+				var d = new Date();
+				var h = d.getUTCHours();
+				var e = new Date();
+				var m = e.getUTCMinutes();
+				if ((h > 12 && m > 50)) {
+					var hm = h*60;
+					var tm = hm + m;
+					tm = 1440 - tm;
+				} else {
+					var hm = h*60;
+					var tm = hm + m;
+					tm = 770 - tm;
+				}
+				document.write("Minutes until next update: " + tm + " (estimated)");
+			</script>
 					</div>
 				</td>
 			</tr>
@@ -766,7 +783,7 @@
 			<table id="footer_table">
 				<tr>
 					<td>
-			<br><span id="howto">README</span>
+			<br><br><span id="howto">README</span>
 			<br>
 			<br>Click on spot for wave period forecast
 			<br><br><a href="https://www.glerl.noaa.gov/res/glcfs/glcfs.html">Data from GLCFS</a>
@@ -785,7 +802,7 @@
 			<br>By Mike Krupski
 			<br><a href="https://github.com/lakessurf/lakessurf.github.io">Powered by Github</a>
 			<br><a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
-			<br>v0.7.2
+			<br>v0.7.3
 			<br><span id="neptune"><br>&#9798;</span><br><br><br>
 					</div>
 				</td>
