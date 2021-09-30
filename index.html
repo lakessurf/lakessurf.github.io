@@ -11,7 +11,7 @@
 		<title>Great Lakes Surf Forecast</title>
 	<style>
 		body
-			{text-align: center;background-color:#EEE5E9;font-family:sans-serif;}
+			{text-align:center;background-color:#EEE5E9;font-family:sans-serif;-webkit-text-size-adjust: 100%;}
 		p 
 			{margin:0px;padding:0px;}
 		table
@@ -21,7 +21,7 @@
 		canvas
 			{display:block;padding:0px;margin:auto;}
 		summary
-			{color:#D64933;display: block;}
+			{color:#D64933;display:block;}
 		#main_table 
 			{margin-left:auto;margin-right:auto;text-align:center;}
 		#row1
@@ -39,15 +39,13 @@
 		#box_td
 			{border:none;}
 		#footer_table
-			{border:1px solid black;background-color:white;margin-left:auto;margin-right:auto;text-align:center;border-collapse:collapse;}
+			{font-size:12px;border:1px solid black;background-color:white;margin-left:auto;margin-right:auto;text-align:center;border-collapse:collapse;}
 		#logo
 			{color:black;font-size:35px;font-weight:lighter;}
 		#logo2
 			{color:black;font-size:35px;font-weight:bold;}
 		#beta
 			{font-size:10px;color:darkorange;font-family:serif;vertical-align:150%;}
-		#footer
-			{font-size:12px;}
 		#wave_h
 			{font-size:15px;}
 			/*wave height text*/
@@ -62,6 +60,8 @@
 			{color:#D64933;}
 		#boldspot
 			{font-weight:bold;}
+		#time_til_update
+			{font-size:12px;font-style:italic;font-weight:lighter;text-align:right;margin-right:-250px;}
 	</style>
 	<script>
 		function init () {	
@@ -119,6 +119,14 @@
 		    let ctx=document.getElementById("canvas_time_"+i).getContext("2d");
 		    let img=new Image();
 		    img.onload=function(){ctx.drawImage(img,520,487,820,615,0,0,820,615);}
+		    img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+0"+i+".gif";
+				}
+				
+			for (var i = 1; i < 10; i++)
+				{
+		    let ctx=document.getElementById("canvas_time2_"+i).getContext("2d");
+		    let img=new Image();
+		    img.onload=function(){ctx.drawImage(img,630,487,820,615,0,0,820,615);}
 		    img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+0"+i+".gif";
 				}
 				
@@ -266,6 +274,14 @@
 				
 			for (var i = 10; i < 63; i++)
 				{
+		    let ctx=document.getElementById("canvas_time2_"+i).getContext("2d");
+		    let img=new Image();
+		    img.onload=function(){ctx.drawImage(img,630,487,820,615,0,0,820,615);}
+		    img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+"+i+".gif";
+				}
+				
+			for (var i = 10; i < 63; i++)
+				{
 		    let ctx=document.getElementById("canvas_st_"+i).getContext("2d");
 		    let img=new Image();
 			ctx.mozImageSmoothingEnabled = false;
@@ -408,6 +424,14 @@
 				
 			for (var i = 63; i < 121; i = i + 3 )
 				{
+		    let ctx=document.getElementById("canvas_time2_"+i).getContext("2d");
+		    let img=new Image();
+		    img.onload=function(){ctx.drawImage(img,630,487,820,615,0,0,820,615);}
+		    img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+"+i+".gif";
+				}
+				
+			for (var i = 63; i < 121; i = i + 3 )
+				{
 		    let ctx=document.getElementById("canvas_st_"+i).getContext("2d");
 		    let img=new Image();
 			ctx.mozImageSmoothingEnabled = false;
@@ -543,11 +567,23 @@
 </head>
 <body>
 	<br>
-	<span id="logo">&nbsp;&nbsp;Great </span><span id="logo2">Lakes.Surf</span><span id="logo"> Forecast</span>&nbsp;&nbsp;<span id="beta"><i>BETA</i></span>
-	<br>
-	<br>
+	<span id="logo">&nbsp;&nbsp;&nbsp;Great </span><span id="logo2">Lakes.Surf</span><span id="logo"> Forecast</span>&nbsp;&nbsp;<span id="beta"><i>BETA</i></span>
+	<br><span id="time_til_update"><script>
+		var d = new Date();
+		var h = d.getUTCHours();
+		var e = new Date();
+		var m = e.getUTCMinutes();
+		var hm = h*60;
+		var tm = hm + m;
+		if (tm > 770) {
+			tm = 1440 - tm;
+		} else {
+			tm = 770 - tm;
+		}
+		document.write( tm + " minutes until next update");
+	</script></span>
+	<br><br><br>
 		<table id="main_table">
-			
 			<tr id="row1">
 				<td></td>
 				<td><a href="https://www.windfinder.com/weatherforecast/port-stanley_lake-erie/print?units=c&vert;kts&vert;ft&vert;mm&vert;arrow&vert;sym&vert;24&vert;hPa" target="_blank">Stanley</a></td>
@@ -565,7 +601,8 @@
 			
 				<script>
 					for (var i = 1; i < 13; i++) {
-				document.write("<tr><td id=\"white_bg\"><canvas id=\"canvas_time_"+i+"\" width=195 height=12></canvas></td>");
+				document.write("<tr><td id=\"white_bg\"><canvas id=\"canvas_time_"+i+"\" width=55 height=12></canvas>");
+				document.write("<canvas width=50 height=5></canvas><canvas id=\"canvas_time2_"+i+"\"  width=85 height=12></canvas></td>");
 		    	document.write("<td><canvas id=\"canvas_st_"+i+"\"  width=65 height=65></canvas></td>");
 				document.write("<td><canvas id=\"canvas_cl_"+i+"\"  width=65 height=65></canvas></td>");
 				document.write("<td><canvas id=\"canvas_gb_"+i+"\"  width=65 height=65></canvas></td>");
@@ -597,7 +634,8 @@
 					
 				<script>
 					for (var i = 13; i < 25; i++) {
-				document.write("<tr><td id=\"white_bg\"><canvas id=\"canvas_time_"+i+"\" width=195 height=12></canvas></td>");
+				document.write("<tr><td id=\"white_bg\"><canvas id=\"canvas_time_"+i+"\" width=55 height=12></canvas>");
+				document.write("<canvas width=50 height=5></canvas><canvas id=\"canvas_time2_"+i+"\"  width=85 height=12></canvas></td>");
 		    	document.write("<td><canvas id=\"canvas_st_"+i+"\"  width=65 height=65></canvas></td>");
 				document.write("<td><canvas id=\"canvas_cl_"+i+"\"  width=65 height=65></canvas></td>");
 				document.write("<td><canvas id=\"canvas_gb_"+i+"\"  width=65 height=65></canvas></td>");
@@ -629,7 +667,8 @@
 					
 				<script>
 					for (var i = 25; i < 37; i++) {
-				document.write("<tr><td id=\"white_bg\"><canvas id=\"canvas_time_"+i+"\" width=195 height=12></canvas></td>");
+				document.write("<tr><td id=\"white_bg\"><canvas id=\"canvas_time_"+i+"\" width=55 height=12></canvas>");
+				document.write("<canvas width=50 height=5></canvas><canvas id=\"canvas_time2_"+i+"\"  width=85 height=12></canvas></td>");
 		    	document.write("<td><canvas id=\"canvas_st_"+i+"\"  width=65 height=65></canvas></td>");
 				document.write("<td><canvas id=\"canvas_cl_"+i+"\"  width=65 height=65></canvas></td>");
 				document.write("<td><canvas id=\"canvas_gb_"+i+"\"  width=65 height=65></canvas></td>");
@@ -661,7 +700,8 @@
 					
 				<script>
 					for (var i = 37; i < 49; i++) {
-				document.write("<tr><td id=\"white_bg\"><canvas id=\"canvas_time_"+i+"\" width=195 height=12></canvas></td>");
+				document.write("<tr><td id=\"white_bg\"><canvas id=\"canvas_time_"+i+"\" width=55 height=12></canvas>");
+				document.write("<canvas width=50 height=5></canvas><canvas id=\"canvas_time2_"+i+"\"  width=85 height=12></canvas></td>");
 		    	document.write("<td><canvas id=\"canvas_st_"+i+"\"  width=65 height=65></canvas></td>");
 				document.write("<td><canvas id=\"canvas_cl_"+i+"\"  width=65 height=65></canvas></td>");
 				document.write("<td><canvas id=\"canvas_gb_"+i+"\"  width=65 height=65></canvas></td>");
@@ -693,7 +733,8 @@
 					
 				<script>
 					for (var i = 49; i < 63; i++) {
-				document.write("<tr><td id=\"white_bg\"><canvas id=\"canvas_time_"+i+"\" width=195 height=12></canvas></td>");
+				document.write("<tr><td id=\"white_bg\"><canvas id=\"canvas_time_"+i+"\" width=55 height=12></canvas>");
+				document.write("<canvas width=50 height=5></canvas><canvas id=\"canvas_time2_"+i+"\"  width=85 height=12></canvas></td>");
 		    	document.write("<td><canvas id=\"canvas_st_"+i+"\"  width=65 height=65></canvas></td>");
 				document.write("<td><canvas id=\"canvas_cl_"+i+"\"  width=65 height=65></canvas></td>");
 				document.write("<td><canvas id=\"canvas_gb_"+i+"\"  width=65 height=65></canvas></td>");
@@ -726,7 +767,8 @@
 					
 				<script>
 					for (var i = 63; i < 121; i = i + 3) {
-				document.write("<tr><td id=\"white_bg\"><canvas id=\"canvas_time_"+i+"\" width=195 height=12></canvas></td>");
+				document.write("<tr><td id=\"white_bg\"><canvas id=\"canvas_time_"+i+"\" width=55 height=12></canvas>");
+				document.write("<canvas width=50 height=5></canvas><canvas id=\"canvas_time2_"+i+"\"  width=85 height=12></canvas></td>");
 		    	document.write("<td><canvas id=\"canvas_st_"+i+"\"  width=65 height=65></canvas></td>");
 				document.write("<td><canvas id=\"canvas_cl_"+i+"\"  width=65 height=65></canvas></td>");
 				document.write("<td><canvas id=\"canvas_gb_"+i+"\"  width=65 height=65></canvas></td>");
@@ -743,54 +785,38 @@
 					</script>					
 							
 		</table>
-			<br>
+		<br><br>
 		<table id="footer_table">
 			<tr>
-				<td><div id="wave_h"><br>&nbsp;&nbsp;&nbsp;&nbsp;Wave Height&nbsp;&nbsp;&nbsp;&nbsp;</div>	
+				<td><br><div id="wave_h">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Wave Height&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>	
 					<canvas id="canvas_w_legend" width=80 height=85></canvas></td>
 				</tr>
 				<tr>	
-					<td id="box_td"><div id="wave_f">(feet)<br><br></div></td>
+					<td id="box_td"><span id="wave_f">(feet)<br><br></span></td>
 			</tr>
 		</table>
-		<br>
+		<br><br>
 		<table id="footer_table">
 			<tr>
 				<td>
-			<div id="footer">
 			<br>
 			<canvas id="canvas_time_up" width=290 height=12></canvas>
 			<br>
 			<script>
-				now = new Date();
-				utctime = now.toUTCString();
-				document.write("Current time: " + utctime );
+					var d = new Date();
+					var h = d.getUTCHours();
+					var e = new Date();
+					var m = e.getUTCMinutes();
+					if (m<10){m = "0" + parseInt(m)}
+				document.write("Current time: " + h + ":" + m + " GMT");
 			</script>
-			<br>
-			<br>Updated at 00:50/12:50 GMT 
-			<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(08:50/20:50 EDT) (07:50/19:50 EST)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<br>
-			<script>
-				var d = new Date();
-				var h = d.getUTCHours();
-				var e = new Date();
-				var m = e.getUTCMinutes();
-				var hm = h*60;
-				var tm = hm + m;
-				if (tm > 770) {
-					tm = 1440 - tm;
-				} else {
-					tm = 770 - tm;
-				}
-				document.write("Minutes until next update: " + tm + " (estimated)");
-			</script>
+			<br>Updated at 00:50/12:50 GMT
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(08:50/20:50EDT)(07:50/19:50EST)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<br><br>
-					</div>
 				</td>
 			</tr>
 		</table>
-			<div id="footer">
-			<br><br><br><br>
+			<br><br>
 			<table id="footer_table">
 				<tr>
 					<td>
@@ -930,17 +956,22 @@
 					</details>
 					<details>
 						<summary><span id="spots">Lake Superior</span></summary>
-						<br>Schreiber Beach
-						<br>Hydro Bay
+						<br>Caldwell Lake Beach
+						<br><span id="boldspot">Chippewa Park Sandy Beach</span>
+						<br>Sibley Cove
+						<br>Middlebrun Bay
+						<br>Worthington Bay
+						<br><span id="boldspot">Terrace Hydro Bay</span>
 						<br><span id="boldspot">Terrace Bay Beach</span>
 						<br><span id="boldspot">Ridgewood Pumphouse Beach</span>
 						<br>Jackfish Beach
 						<br>Santoy Bay
 						<br>Prairie River Mouth Beach
 						<br><span id="boldspot">Neys Provincial Park</span>
+						<br>Red Sucker Point
 						<br>Marathon Pebble Beach
 						<br>Pukaskwa National Park
-						<br>Sandy Beach
+						<br>Michipicoten Sandy Beach
 						<br>Michipicoten River
 						<br>Old Woman Bay
 						<br>Bushy Bay
@@ -966,9 +997,8 @@
 			<br><a href="https://github.com/lakessurf/lakessurf.github.io">Powered by Github</a>
 			<br><a href="https://www.instagram.com/michal.krupski/">Made by Mike Krupski</a>
 			<br><a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
-			<br>v0.7.6
+			<br>v0.7.7
 			<br><span id="neptune"><br>&#9798;</span><br><br><br>
-					</div>
 				</td>
 			</tr>
 		</table>
