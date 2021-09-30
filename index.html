@@ -11,7 +11,7 @@
 		<title>Great Lakes Surf Forecast</title>
 	<style>
 		body
-			{text-align: center;background-color:#EEE5E9;}
+			{text-align: center;background-color:#EEE5E9;font-family:sans-serif;}
 		p 
 			{margin:0px;padding:0px;}
 		table
@@ -25,7 +25,7 @@
 		#main_table 
 			{margin-left:auto;margin-right:auto;text-align:center;}
 		#row1
-			{background-color:#EEE5E9;font-family:serif;color:#7C7C7C;font-size:12px;}
+			{background-color:#EEE5E9;color:#7C7C7C;font-size:12px;}
 		#white_bg
 			{background-color:white;}
 		a:link 		
@@ -41,9 +41,9 @@
 		#footer_table
 			{border:1px solid black;background-color:white;margin-left:auto;margin-right:auto;text-align:center;border-collapse:collapse;}
 		#logo
-			{color:black;font-size:35px;font-family:sans-serif;font-weight:lighter;}
+			{color:black;font-size:35px;font-weight:lighter;}
 		#logo2
-			{color:black;font-size:35px;font-family:sans-serif;font-weight:bold;}
+			{color:black;font-size:35px;font-weight:bold;}
 		#beta
 			{font-size:10px;color:darkorange;font-family:serif;vertical-align:150%;}
 		#footer
@@ -55,11 +55,13 @@
 			{font-size:10px;color:blue;}
 			/*feet text*/
 		#howto
-			{font-size:15px;}
+			{font-weight:bold;}
 		#neptune
 			{font-size:40px;}
 		#spots
 			{color:#D64933;}
+		#boldspot
+			{font-weight:bold;}
 	</style>
 	<script>
 		function init () {	
@@ -744,11 +746,11 @@
 			<br>
 		<table id="footer_table">
 			<tr>
-				<td><div id="wave_h">&nbsp;&nbsp;Wave Height&nbsp;&nbsp;</div>	
+				<td><div id="wave_h"><br>&nbsp;&nbsp;&nbsp;&nbsp;Wave Height&nbsp;&nbsp;&nbsp;&nbsp;</div>	
 					<canvas id="canvas_w_legend" width=80 height=85></canvas></td>
 				</tr>
 				<tr>	
-					<td id="box_td"><div id="wave_f">(feet)</div></td>
+					<td id="box_td"><div id="wave_f">(feet)<br><br></div></td>
 			</tr>
 		</table>
 		<br>
@@ -756,31 +758,33 @@
 			<tr>
 				<td>
 			<div id="footer">
+			<br>
+			<canvas id="canvas_time_up" width=290 height=12></canvas>
+			<br>
 			<script>
 				now = new Date();
 				utctime = now.toUTCString();
 				document.write("Current time: " + utctime );
 			</script>
-			<canvas id="canvas_time_up" width=290 height=12></canvas>
-			Updated at 00:50/12:50 GMT 
-			<br>(08:50/20:50 EDT) (07:50/19:50 EST)
+			<br>
+			<br>Updated at 00:50/12:50 GMT 
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(08:50/20:50 EDT) (07:50/19:50 EST)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<br>
 			<script>
 				var d = new Date();
 				var h = d.getUTCHours();
 				var e = new Date();
 				var m = e.getUTCMinutes();
-				if ((h > 12 && m > 50)) {
-					var hm = h*60;
-					var tm = hm + m;
+				var hm = h*60;
+				var tm = hm + m;
+				if (tm > 770) {
 					tm = 1440 - tm;
 				} else {
-					var hm = h*60;
-					var tm = hm + m;
 					tm = 770 - tm;
 				}
 				document.write("Minutes until next update: " + tm + " (estimated)");
 			</script>
+			<br><br>
 					</div>
 				</td>
 			</tr>
@@ -790,142 +794,179 @@
 			<table id="footer_table">
 				<tr>
 					<td>
+			<br>
 			<br><span id="howto">README</span>
+			<br>
 			<br>Click on spot name for 
 			<br>wave period forecast
 			<br>
 			<br>For iOS App click Share Button
 			<br>then Add to Home Screen
-			<br><br><a href="https://www.glerl.noaa.gov/res/glcfs/glcfs.html">Data from GLCFS</a>
 			<br>
-			<br>Forecast Maps
 			<br>
-			&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.glerl.noaa.gov/res/glcfs/glcfs.php?lake=e&ext=wv&type=F&hr=01">Lake Erie</a>&nbsp;&nbsp;&nbsp;
+			<br><span id="howto">Forecast Maps</span>
+			<br>
+			<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.glerl.noaa.gov/res/glcfs/glcfs.php?lake=e&ext=wv&type=F&hr=01">Lake Erie</a>&nbsp;&nbsp;&nbsp;
 			<a href="https://www.glerl.noaa.gov/res/glcfs/glcfs.php?lake=h&ext=wv&type=F&hr=01">Lake Huron</a>&nbsp;&nbsp;&nbsp;
-			<a href="https://www.glerl.noaa.gov/res/glcfs/glcfs.php?lake=o&ext=wv&type=F&hr=01">Lake Ontario</a>&nbsp;&nbsp;&nbsp;&nbsp;
-			<br><br>Additional Resources
+			<a href="https://www.glerl.noaa.gov/res/glcfs/glcfs.php?lake=o&ext=wv&type=F&hr=01">Lake Ontario</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<br><br><span id="howto">Additional Resources</span>
+			<br>
 			<br><a href="http://surfradar.info/index/myspots/0-37?SelectorTable_length=50&spot=portstanley&spot=portcolborne&spot=sarnia&spot=grandbend&spot=kincardine&spot=saublebeach&spot=wasaga&spot=fiftypoint&spot=hamilton&spot=toronto&spot=oshawa&spot=cobourg&spot=sandbankspp#surfData">SurfRadar</a>&nbsp;&nbsp;
 			<a href="https://surfthegreats.org/pages/faq">SurfTheGreats</a>&nbsp;&nbsp;
 			<a href="http://lakeswell.com/">LakeSwell</a>
-			<br><br><br><br>
-			
+			<br><br>
 			<details>
 				<summary>Spots</summary>
+					<br><span id="boldspot">Respect the Environment</span>
+					<br><span id="boldspot">Don’t Trespass</span>
+					<br><br>
 					<details>
-						<summary><span id="spots"> Lake Erie</span></summary>
-						Seacliffe Beach
+						<summary><span id="spots">Tools</span></summary>
+						<br><a href="https://webapp.navionics.com/">Nautical Charts</a>
+						<br><a href="https://www.lioapplications.lrc.gov.on.ca/MakeATopographicMap/index.html?viewer=Make_A_Topographic_Map.MATM">Property Lines</a>
+						<br><a href="https://www.openstreetmap.org/">Open Street Map</a>
+						<br><a href="https://www.google.com/maps/">Google Maps</a>
+						<br><br>
+					</details>
+					<details>
+						<summary><span id="spots">Lake Erie</span></summary>
+						<br>Seacliffe Beach
 						<br>Pelee Island
-						<br>&starf;Point Pelee National Park
+						<br><span id="boldspot">Point Pelee National Park</span>
 						<br>Wheatley Provincial Park
 						<br>Erieau Beach
-						<br>&starf;Rondeau Provincial Park
+						<br><span id="boldspot">Rondeau Provincial Park</span>
 						<br>Duttona Beach
 						<br>John E. Pearce Provincial Park
-						<br>&starf;Little Beach Port Stanley
+						<br><span id="boldspot">Little Beach Port Stanley</span>
 						<br>Main Beach Port Stanley
 						<br>Port Bruce Provincial Park
 						<br>Port Burwell Provincial Park
-						<br>&starf;Long Point Provincial Park
+						<br><span id="boldspot">Long Point Provincial Park</span>
 						<br>Port Dover Beach
 						<br>Selkirk Provincial Park
 						<br>James N. Allen Provincial Park
 						<br>Rock Point Provincial Park
 						<br>Nickel Beach
-						<br>&starf;Wyldewood Beach
+						<br><span id="boldspot">Wyldewood Beach</span>
 						<br>Pleasant Beach
-						<br>&starf;Crystal Beach Waterfront Park
-						<br>
+						<br><span id="boldspot">Crystal Beach Waterfront Park</span>
+						<br><br>
 					</details>
 					<details>
-						<summary><span id="spots"> Lake Huron</span></summary>
-						Canatara Beach
+						<summary><span id="spots">Lake Huron</span></summary>
+						<br>Canatara Beach
 						<br>Murphy Road Beach 
 						<br>Brights Grove Beach
 						<br>Windcliff Lane Beach
 						<br>Highland Glen Conservation Area
 						<br>Kettle Point
-						<br>&starf;Ipperwash Beach
+						<br><span id="boldspot">Ipperwash Beach</span>
 						<br>Pinery Provincial Park
-						<br>&starf;Grand Bend Beach
-						<br>&starf;Bayfield Pier Beach
+						<br><span id="boldspot">Grand Bend Beach</span>
+						<br><span id="boldspot">Bayfield Pier Beach</span>
 						<br>Goderich Rotary Cove Beach
 						<br>Point Farms Provincial Park
 						<br>Port Albert Beach
 						<br>Point Clark Beach
-						<br>&starf;Kincardine Station Beach
-						<br>&starf;Inverhuron Provincial Park
+						<br><span id="boldspot">Kincardine Station Beach</span>
+						<br><span id="boldspot">Inverhuron Provincial Park</span>
 						<br>MacGregor Point Provincial Park
 						<br>Southampton Beach
-						<br>&starf;Sauble Beach
+						<br><span id="boldspot">Sauble Beach</span>
 						<br>Black Creek Provincial Park
+						<br>
 						<br>Michael’s Bay
 						<br>Carter Bay
-						<br>&starf;Providence Bay
+						<br><span id="boldspot">Providence Bay</span>
 						<br>Misery Bay
 						<br>Sand Bay
+						<br>
+						<br>Lion's Head Beach
+						<br>Hope Bay
+						<br>Christie Beach
 						<br>Craigleith Provincial Park
 						<br>Northwinds Beach
 						<br>Sunset Point Beach
-						<br>&starf;Wasaga Beach
+						<br><span id="boldspot">Wasaga Beach</span>
 						<br>Belle-eau-Claire Beach
-						<br>
+						<br><br>
 					</details>
 					<details>
-					<summary><span id="spots"> Lake Ontario</span></summary>
-						Ryerson Park
+					<summary><span id="spots">Lake Ontario</span></summary>
+						<br>Ryerson Park
 						<br>Niagara Shores Park
 						<br>Jones Beach
 						<br>Port Weller Beach
 						<br>St. Catharines Lakeside Park Beach
-						<br>&starf;Fifty Road Beach
-						<br>&starf;Van Wagners Beach
-						<br>&starf;Hamilton Beach
-						<br>&starf;Beachway Park
+						<br><span id="boldspot">Fifty Road Beach</span>
+						<br><span id="boldspot">Van Wagners Beach</span>
+						<br><span id="boldspot">Hamilton Beach</span>
+						<br><span id="boldspot">Beachway Park</span>
 						<br>Sioux Lookout Park
 						<br>Jack Darling Park
 						<br>Tommy Thompson Park Point
-						<br>&starf;Ashbridges Bay Park
+						<br><span id="boldspot">Woodbine Beach</span>
 						<br>R.C. Harris Secret Beach
-						<br>&starf;Bluffers Park
+						<br><span id="boldspot">Bluffers Park</span>
 						<br>Rogue Beach
 						<br>Frenchman's Bay Beach
-						<br>&starf;Oshawa Lakeview Park Beach
+						<br><span id="boldspot">Oshawa Lakeview Park Beach</span>
 						<br>Darlington Provincial Park
 						<br>Port Darlington West Beach
 						<br>Bond Head Beach
 						<br>Port Hope East Beach
-						<br>&starf;Cobourg Beach
+						<br><span id="boldspot">Cobourg Beach</span>
 						<br>Wickalow Beach
-						<br>&starf;Presqu'ile Provincial Park
+						<br><span id="boldspot">Presqu'ile Provincial Park</span>
 						<br>North Beach Provincial Park
-						<br>&starf;Sandbanks Provincial Park
+						<br><span id="boldspot">Sandbanks Provincial Park</span>
 						<br>Point Petre
 						<br>Patterson Park
 						<br>McDonald Park
 						<br>Reeds Bay
 						<br>Big Sandy Bay Beach
-						<br>
+						<br><br>
 					</details>
 					<details>
-						<summary><span id="spots"> Lake Superior</span></summary>
-						Hydro Bay
-						<br>&starf;Terrace Bay Beach
-						<br>Pumphouse Beach
-						<br>&starf;Neys Provincial Park
+						<summary><span id="spots">Lake Superior</span></summary>
+						<br>Schreiber Beach
+						<br>Hydro Bay
+						<br><span id="boldspot">Terrace Bay Beach</span>
+						<br><span id="boldspot">Ridgewood Pumphouse Beach</span>
+						<br>Jackfish Beach
+						<br>Santoy Bay
+						<br>Prairie River Mouth Beach
+						<br><span id="boldspot">Neys Provincial Park</span>
 						<br>Marathon Pebble Beach
 						<br>Pukaskwa National Park
+						<br>Sandy Beach
 						<br>Michipicoten River
+						<br>Old Woman Bay
+						<br>Bushy Bay
+						<br>Red Rock River Beach
+						<br>Gargantua Bay
+						<br>Baldhead River Beach
+						<br>Coldwater River Beach
+						<br>Sand River Falls Beach
+						<br>Barrett River Beach
+						<br><span id="boldspot">Agawa Bay</span>
+						<br>MacGregor Cove
 						<br>Montreal River Harbour
 						<br>Alona Bay
+						<br>Mica Bay
 						<br>Hibbard Bay
+						<br>Sawpit Bay
+						<br><span id="boldspot">Pancake Bay Provincial Park</span>
+						<br><br>
 					</details>
 			</details>
-			<br>
-			<br>&starf;
-			<br>By Mike Krupski
+			<br><a href="https://www.instagram.com/lakes.surf/">Instagram</a>
+			<br><a href="https://www.glerl.noaa.gov/res/glcfs/glcfs.html">Data from GLCFS</a>
 			<br><a href="https://github.com/lakessurf/lakessurf.github.io">Powered by Github</a>
+			<br><a href="https://www.instagram.com/michal.krupski/">Made by Mike Krupski</a>
 			<br><a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
-			<br>v0.7.5
+			<br>v0.7.6
 			<br><span id="neptune"><br>&#9798;</span><br><br><br>
 					</div>
 				</td>
