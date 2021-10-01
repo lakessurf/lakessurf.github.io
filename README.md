@@ -11,7 +11,8 @@
 -Cloudflare for DNS and cache  
 -GitHub for web hosting and source code control  
 -HTML/CSS/JS  
--[GLCFS](https://www.glerl.noaa.gov/res/glcfs/glcfs.html) Data
+-[GLCFS](https://www.glerl.noaa.gov/res/glcfs/glcfs.html) Data  
+-Google Translate Proxy to prevent Windfinder iOS App from opening
   
   
 🎉Features🎉  
