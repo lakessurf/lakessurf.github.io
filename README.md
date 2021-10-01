@@ -23,8 +23,7 @@
   
 📋Todo📋  
   
--add wind to forecast chart  
--add Point Pelee to forecast chart  
+-add wind to forecast
   
   
 📝By Michal (Mike) Krupski  
