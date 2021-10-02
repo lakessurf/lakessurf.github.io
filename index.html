@@ -8,11 +8,10 @@
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 		<meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=0.7">
-		<meta name="apple-mobile-web-app-capable" content="yes">
 		<title>Great Lakes Surf Forecast</title>
 	<style>
 		body
-			{text-align:center;background: rgb(0,0,66);background: linear-gradient(0deg, rgba(0,0,66,1) 30%, rgba(0,0,168,1) 50%);font-family:sans-serif;-webkit-text-size-adjust:100%;margin-top: 40px;}
+			{text-align:center;background: rgb(0,0,66);background: linear-gradient(0deg, rgba(0,0,66,1) 30%, rgba(0,0,168,1) 50%);font-family:sans-serif;-webkit-text-size-adjust:100%;margin-top:40px;}
 		p 
 			{margin:0px;padding:0px;}
 		table
@@ -729,8 +728,24 @@
 			}
 		document.addEventListener('DOMContentLoaded', init)
 	</script>
+			
+	<script>
+		(() => {
+			if (window.localStorage) {
+				if (!localStorage.getItem('reload')) {
+					localStorage['reload'] = true;
+					window.location.reload();
+				} else {
+					localStorage.removeItem('reload');
+				}
+			}
+		})();
+	</script>
+			
 </head>
+
 <body>
+	
 	<br><span id="logo">Great </span><span id="logo2">Lakes.Surf</span><span id="logo"> Forecast</span>
 	<br><span id="time_til_update"><script>
 		var d = new Date();
@@ -1235,7 +1250,7 @@
 			<br><canvas width=30 height=30></canvas>
 			<br><a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
 			<br><canvas width=30 height=30></canvas>
-			<br>v0.8.4
+			<br>v0.8.5
 			<br><canvas width=30 height=20></canvas>
 			<br><span id="neptune">&#9798;</span>
 			<br><canvas width=30 height=30></canvas>
