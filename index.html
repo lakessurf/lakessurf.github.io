@@ -741,10 +741,12 @@
 		var m = e.getUTCMinutes();
 		var hm = h*60;
 		var tm = hm + m;
-		if (tm > 770) {
-			tm = 1490 - tm;
+		if (tm < 60) {
+			tm = 60 - tm;
+		} else if (tm > 780){
+			tm = 1500 - tm;
 		} else {
-			tm = 770 - tm;
+			tm = 780 - tm;
 		}
 		document.write( tm + " minutes until next update");
 	</script></span>
@@ -1032,6 +1034,7 @@
 					var h = d.getUTCHours();
 					var e = new Date();
 					var m = e.getUTCMinutes();
+					if (h<10){h = "0" + parseInt(h)}
 					if (m<10){m = "0" + parseInt(m)}
 				document.write("Current time: " + h + ":" + m + " GMT");
 			</script>
@@ -1055,17 +1058,17 @@
 			<br>then Add to Home Screen
 			<br>
 			<br>
-			<br><span id="howto">Forecast Maps</span>
+			<br><br><span id="howto">Forecast Maps</span>
 			<br>
 			<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.glerl.noaa.gov/res/glcfs/glcfs.php?lake=e&ext=wv&type=F&hr=01">Lake Erie</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<a href="https://www.glerl.noaa.gov/res/glcfs/glcfs.php?lake=h&ext=wv&type=F&hr=01">Lake Huron</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<a href="https://www.glerl.noaa.gov/res/glcfs/glcfs.php?lake=o&ext=wv&type=F&hr=01">Lake Ontario</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<br><br><span id="howto">Additional Resources</span>
+			<br><br><br><span id="howto">Additional Resources</span>
 			<br>
 			<br><a href="http://surfradar.info/index/myspots/0-37?SelectorTable_length=50&spot=portstanley&spot=portcolborne&spot=sarnia&spot=grandbend&spot=kincardine&spot=saublebeach&spot=wasaga&spot=fiftypoint&spot=hamilton&spot=toronto&spot=oshawa&spot=cobourg&spot=sandbankspp#surfData">SurfRadar</a>&nbsp;&nbsp;&nbsp;&nbsp;
 			<a href="https://surfthegreats.org/pages/faq">SurfTheGreats</a>&nbsp;&nbsp;&nbsp;&nbsp;
 			<a href="http://lakeswell.com/">LakeSwell</a>
-			<br><br>
+			<br><br><br><br>
 			<details>
 				<summary>Spots</summary>
 					<br><span id="boldspot">Respect the Environment</span>
@@ -1225,7 +1228,7 @@
 			<br><br><a href="https://github.com/lakessurf/lakessurf.github.io">Powered by Github</a>
 			<br><br><a href="https://www.instagram.com/michal.krupski/">Made by Mike Krupski</a>
 			<br><br><a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
-			<br><br>v0.8.0
+			<br><br>v0.8.1
 			<br><span id="neptune"><br>&#9798;</span><br><br><br>
 				</td>
 			</tr>
