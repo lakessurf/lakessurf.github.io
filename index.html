@@ -22,15 +22,15 @@
 		canvas
 			{display:block;padding:0px;margin:auto;}
 		summary
-			{color:#FF4000;display:block;}
+			{color:#0000A8;display:block;}
 		a:link 		
-			{color:#FF4000;text-decoration:none;}
+			{color:#0000A8;text-decoration:none;}
 		a:visited 	
-			{color:#FF4000;text-decoration:none;}
+			{color:#0000A8;text-decoration:none;}
 		a:hover 	
-			{color:#0000A8;text-decoration:none;font-weight:bold;}
+			{color:#F53029;text-decoration:none;font-weight:bold;}
 		a:active 	
-			{color:#FF4000;text-decoration:none;}
+			{color:#0000A8;text-decoration:none;}
 		a.main:link 		
 			{color:#000000;text-decoration:none;}
 		a.main:visited 	
@@ -43,24 +43,20 @@
 			{margin-left:auto;margin-right:auto;text-align:center;}
 		#row1
 			{vertical-align:middle;color:#7C7C7C;font-size:12px;font-weight:lighter;height:74px;}
-		#white_bg
+		#time_box
 			{width:85px;height:35px;background-color:#FFFFFF;border-radius:5px;border:0px solid #0000A8;padding:2px;}
-		#box_td
-			{border:none;}
 		#footer_table
 			{font-size:14px;font-weight:lighter;background-color:#FFFFFF;border-radius:15px;border:0px solid #000000;padding:0px;margin-left:auto;margin-right:auto;text-align:center;border-collapse:collapse;}
 		#logo
 			{color:#FFFFFF;font-size:40px;font-weight:lighter;}
 		#logo2
 			{color:#FFFFFF;font-size:40px;font-weight:bold;}
-		#wave_f
-			{font-size:12px;color:#0000A8;}
+		#wave_font
+			{font-size:16px;color:#000000;font-style:italic;font-weight:lighter;}
 		#footer_header
 			{font-weight:bold;font-size:20px;}
 		#neptune
 			{font-size:40px;}
-		#spots
-			{color:#FF0000;}
 		#boldspot
 			{font-weight:bold;}
 		#time_til_update
@@ -69,7 +65,7 @@
 			{font-size:10px;}
 		#spot_click
 			{box-shadow: 0px 2px 5px #000000;background: rgb(220,220,230);background: linear-gradient(0deg, rgba(200,200,210,1) 0%, rgba(255,255,255,1) 50%);width:62px;height:56px;border-radius:15px;border:0px solid #000000;padding:2px;}
-		#spot_click:hover 
+		#spot_click:hover
 			{box-shadow: 0px 0px 0px #000000;background: rgb(0,0,255);color:#FFFFFF;}
 		
 	</style>
@@ -77,7 +73,7 @@
 		function init () {	
 
 
-		//surf spot locations
+//surf spot locations
 			
 			var pe_w=224
 			var pe_h=310
@@ -113,7 +109,7 @@
 			var cb_w=305
 			var cb_h=215
 			
-		//legend and time updated
+//legend and time updated
 			
 			for (var i = 0; i < 1; i++)
 				{
@@ -129,9 +125,16 @@
 		    img.onload=function(){ctx.drawImage(img,630,487,820,615,0,0,820,615);}
 		    img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+01.gif";
 				}
+			for (var i = 0; i < 1; i++)
+				{
+		    let ctx=document.getElementById("canvas_time_next").getContext("2d");
+		    let img=new Image();
+		    img.onload=function(){ctx.drawImage(img,630,487,820,615,0,0,820,615);}
+		    img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+13.gif";
+				}
 					
 			
-		//hours 1-9
+//hours 1-9
 			
 			for (var i = 1; i < 10; i++)
 				{
@@ -329,7 +332,7 @@
 			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/swv+0"+i+".gif";
 				}	
 
-		//hours 10-62
+//hours 10-62
 			
 			for (var i = 10; i < 63; i++)
 				{
@@ -527,7 +530,7 @@
 			img.src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/swv+"+i+".gif";
 				}
 
-		//hours 63-120
+//hours 63-120
 
 			for (var i = 63; i < 121; i = i + 3 )
 				{
@@ -728,8 +731,8 @@
 	</script>
 </head>
 <body>
-	<br><br>
-	<span id="logo">Great </span><span id="logo2">Lakes.Surf</span><span id="logo"> Forecast</span>
+	<canvas width=100 height=20></canvas>
+	<br><span id="logo">Great </span><span id="logo2">Lakes.Surf</span><span id="logo"> Forecast</span>
 	<br><span id="time_til_update"><script>
 		var d = new Date();
 		var h = d.getUTCHours();
@@ -746,7 +749,7 @@
 		}
 		document.write( tm + " minutes until next update");
 	</script></span>
-	<br><br><br><br>
+	<br><canvas width=100 height=60></canvas>
 		<table id="main_table">
 			<tr id="row1">
 				<td></td>
@@ -770,7 +773,7 @@
 			
 				<script>
 					for (var i = 1; i < 13; i++) {
-				document.write("<tr><td><div id=\"white_bg\"><canvas width=50 height=2></canvas><canvas id=\"canvas_time_"+i+"\" width=55 height=12></canvas>");
+				document.write("<tr><td><div id=\"time_box\"><canvas width=50 height=2></canvas><canvas id=\"canvas_time_"+i+"\" width=55 height=12></canvas>");
 				document.write("<canvas width=50 height=5></canvas><canvas id=\"canvas_time2_"+i+"\"  width=85 height=12></canvas></div></td>");
 				document.write("<td><canvas width=12 height=10></canvas></td>");
 				document.write("<td><canvas id=\"canvas_pe_"+i+"\"  width=70 height=65></canvas></td>");
@@ -813,7 +816,7 @@
 					
 				<script>
 					for (var i = 13; i < 25; i++) {
-				document.write("<tr><td><div id=\"white_bg\"><canvas width=50 height=2></canvas><canvas id=\"canvas_time_"+i+"\" width=55 height=12></canvas>");
+				document.write("<tr><td><div id=\"time_box\"><canvas width=50 height=2></canvas><canvas id=\"canvas_time_"+i+"\" width=55 height=12></canvas>");
 				document.write("<canvas width=50 height=5></canvas><canvas id=\"canvas_time2_"+i+"\"  width=85 height=12></canvas></div></td>");
 				document.write("<td><canvas width=12 height=10></canvas></td>");
 				document.write("<td><canvas id=\"canvas_pe_"+i+"\"  width=70 height=65></canvas></td>");
@@ -856,7 +859,7 @@
 					
 				<script>
 					for (var i = 25; i < 37; i++) {
-				document.write("<tr><td><div id=\"white_bg\"><canvas width=50 height=2></canvas><canvas id=\"canvas_time_"+i+"\" width=55 height=12></canvas>");
+				document.write("<tr><td><div id=\"time_box\"><canvas width=50 height=2></canvas><canvas id=\"canvas_time_"+i+"\" width=55 height=12></canvas>");
 				document.write("<canvas width=50 height=5></canvas><canvas id=\"canvas_time2_"+i+"\"  width=85 height=12></canvas></div></td>");
 				document.write("<td><canvas width=12 height=10></canvas></td>");
 				document.write("<td><canvas id=\"canvas_pe_"+i+"\"  width=70 height=65></canvas></td>");
@@ -899,7 +902,7 @@
 			
 				<script>
 					for (var i = 37; i < 49; i++) {
-				document.write("<tr><td><div id=\"white_bg\"><canvas width=50 height=2></canvas><canvas id=\"canvas_time_"+i+"\" width=55 height=12></canvas>");
+				document.write("<tr><td><div id=\"time_box\"><canvas width=50 height=2></canvas><canvas id=\"canvas_time_"+i+"\" width=55 height=12></canvas>");
 				document.write("<canvas width=50 height=5></canvas><canvas id=\"canvas_time2_"+i+"\"  width=85 height=12></canvas></div></td>");
 				document.write("<td><canvas width=12 height=10></canvas></td>");
 				document.write("<td><canvas id=\"canvas_pe_"+i+"\"  width=70 height=65></canvas></td>");
@@ -942,7 +945,7 @@
 					
 				<script>
 					for (var i = 49; i < 63; i++) {
-				document.write("<tr><td><div id=\"white_bg\"><canvas width=50 height=2></canvas><canvas id=\"canvas_time_"+i+"\" width=55 height=12></canvas>");
+				document.write("<tr><td><div id=\"time_box\"><canvas width=50 height=2></canvas><canvas id=\"canvas_time_"+i+"\" width=55 height=12></canvas>");
 				document.write("<canvas width=50 height=5></canvas><canvas id=\"canvas_time2_"+i+"\"  width=85 height=12></canvas></div></td>");
 				document.write("<td><canvas width=12 height=10></canvas></td>");
 				document.write("<td><canvas id=\"canvas_pe_"+i+"\"  width=70 height=65></canvas></td>");
@@ -986,7 +989,7 @@
 					
 				<script>
 					for (var i = 63; i < 121; i = i + 3) {
-				document.write("<tr><td><div id=\"white_bg\"><canvas width=50 height=2></canvas><canvas id=\"canvas_time_"+i+"\" width=55 height=12></canvas>");
+				document.write("<tr><td><div id=\"time_box\"><canvas width=50 height=2></canvas><canvas id=\"canvas_time_"+i+"\" width=55 height=12></canvas>");
 				document.write("<canvas width=50 height=5></canvas><canvas id=\"canvas_time2_"+i+"\"  width=85 height=12></canvas></div></td>");
 				document.write("<td><canvas width=12 height=10></canvas></td>");
 				document.write("<td><canvas id=\"canvas_pe_"+i+"\"  width=70 height=65></canvas></td>");
@@ -1011,24 +1014,32 @@
 		<br><canvas width=50 height=40></canvas>
 		<table id="footer_table">
 			<tr>
-				<td><br><div id="footer_header">Wave Height</div>	
-				<canvas width=180 height=10></canvas>
-				<canvas id="canvas_w_legend" width=80 height=85></canvas></td>
-			</tr>
-			<tr>	
-				<br><canvas width=180 height=4></canvas>
-				<td id="box_td"><span id="wave_f">(feet)<br><br></span></td>
+				<td>
+				<canvas width=50 height=10></canvas>
+				<br><span id="footer_header">Wave Height</span>	
+				<br><canvas width=180 height=10></canvas>
+				<canvas id="canvas_w_legend" width=80 height=85></canvas>
+				</td></tr>
+				<tr><td>
+				<canvas width=100 height=2></canvas>
+				<span id="wave_font">ft&nbsp;</span>
+				<br><canvas width=100 height=20></canvas>
+				</td>
 			</tr>
 		</table>
 		<br><canvas width=50 height=40></canvas>
 		<table id="footer_table">
 			<tr>
 				<td>
+				<canvas width=50 height=10></canvas>
 				<br><span id="footer_header">Updated At</span>
-				<br>
-				<canvas width=200 height=10></canvas>
+				<br><canvas width=200 height=10></canvas>
 				<canvas id="canvas_time_up" width=85 height=12></canvas>
-				<br>
+				<canvas width=200 height=10></canvas>
+				<br><span id="footer_header">Next Update</span>
+				<br><canvas width=200 height=10></canvas>
+				<canvas id="canvas_time_next" width=85 height=12></canvas>
+				<br><canvas width=50 height=20></canvas>
 				</td>
 			</tr>
 		</table>
@@ -1054,11 +1065,11 @@
 			<br><canvas width=30 height=40></canvas>
 			<span id="footer_header">Additional Resources</span>
 			<canvas width=30 height=30></canvas>
-			<a href="https://surfthegreats.org/pages/faq">SurfTheGreats</a>
+			<a href="https://surfthegreats.org/pages/faq">Surf The Greats</a>
 			<br><canvas width=30 height=20></canvas>
-			<br><a href="http://surfradar.info/index/myspots/0-37?SelectorTable_length=50&spot=portstanley&spot=portcolborne&spot=sarnia&spot=grandbend&spot=kincardine&spot=saublebeach&spot=wasaga&spot=fiftypoint&spot=hamilton&spot=toronto&spot=oshawa&spot=cobourg&spot=sandbankspp#surfData">SurfRadar</a>
+			<br><a href="http://surfradar.info/index/myspots/0-37?SelectorTable_length=50&spot=portstanley&spot=portcolborne&spot=sarnia&spot=grandbend&spot=kincardine&spot=saublebeach&spot=wasaga&spot=fiftypoint&spot=hamilton&spot=toronto&spot=oshawa&spot=cobourg&spot=sandbankspp#surfData">Surf Radar</a>
 			<br><canvas width=30 height=20></canvas>
-			<br><a href="http://lakeswell.com/">LakeSwell</a>
+			<br><a href="http://lakeswell.com/">Lake Swell</a>
 			<br><canvas width=30 height=40></canvas>
 			<details>
 				<summary>Spots</summary>
@@ -1074,7 +1085,7 @@
 						<br><br>
 					</details>
 					<details>
-						<summary><span id="spots">Lake Erie</span></summary>
+						<summary>Lake Erie</summary>
 						<br>Seacliffe Beach
 						<br>Pelee Island
 						<br><span id="boldspot">Point Pelee National Park</span>
@@ -1099,7 +1110,7 @@
 						<br><br>
 					</details>
 					<details>
-						<summary><span id="spots">Lake Huron</span></summary>
+						<summary>Lake Huron</summary>
 						<br>Canatara Beach
 						<br>Murphy Road Beach 
 						<br>Brights Grove Beach
@@ -1138,7 +1149,7 @@
 						<br><br>
 					</details>
 					<details>
-					<summary><span id="spots">Lake Ontario</span></summary>
+					<summary>Lake Ontario</summary>
 						<br>Ryerson Park
 						<br>Niagara Shores Park
 						<br>Jones Beach
@@ -1174,7 +1185,7 @@
 						<br><br>
 					</details>
 					<details>
-						<summary><span id="spots">Lake Superior</span></summary>
+						<summary>Lake Superior</summary>
 						<br>Caldwell Lake Beach
 						<br><span id="boldspot">Chippewa Park Sandy Beach</span>
 						<br>Sibley Cove
@@ -1225,7 +1236,7 @@
 			<br><canvas width=30 height=30></canvas>
 			<br><a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
 			<br><canvas width=30 height=30></canvas>
-			<br>v0.8.2
+			<br>v0.8.3
 			<br><canvas width=30 height=20></canvas>
 			<br><span id="neptune">&#9798;</span>
 			<br><canvas width=30 height=30></canvas>
