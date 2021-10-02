@@ -7,12 +7,12 @@
 		<meta name="apple-mobile-web-app-title" content="lakes.surf">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-		<meta name="viewport" content="width=device-width, initial-scale=0.7">
+		<meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=0.7">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<title>Great Lakes Surf Forecast</title>
 	<style>
 		body
-			{text-align:center;background: rgb(0,0,66);background: linear-gradient(0deg, rgba(0,0,66,1) 30%, rgba(0,0,168,1) 50%);font-family:sans-serif;-webkit-text-size-adjust:100%;}
+			{text-align:center;background: rgb(0,0,66);background: linear-gradient(0deg, rgba(0,0,66,1) 30%, rgba(0,0,168,1) 50%);font-family:sans-serif;-webkit-text-size-adjust:100%;margin-top: 40px;}
 		p 
 			{margin:0px;padding:0px;}
 		table
@@ -731,7 +731,6 @@
 	</script>
 </head>
 <body>
-	<canvas width=100 height=20></canvas>
 	<br><span id="logo">Great </span><span id="logo2">Lakes.Surf</span><span id="logo"> Forecast</span>
 	<br><span id="time_til_update"><script>
 		var d = new Date();
@@ -749,7 +748,7 @@
 		}
 		document.write( tm + " minutes until next update");
 	</script></span>
-	<br><canvas width=100 height=60></canvas>
+	<br><canvas width=100 height=30></canvas>
 		<table id="main_table">
 			<tr id="row1">
 				<td></td>
@@ -1236,7 +1235,7 @@
 			<br><canvas width=30 height=30></canvas>
 			<br><a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
 			<br><canvas width=30 height=30></canvas>
-			<br>v0.8.3
+			<br>v0.8.4
 			<br><canvas width=30 height=20></canvas>
 			<br><span id="neptune">&#9798;</span>
 			<br><canvas width=30 height=30></canvas>
