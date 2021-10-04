@@ -7,11 +7,11 @@
 		<meta name="apple-mobile-web-app-title" content="lakes.surf">
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-		<meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=0.7">
+		<meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=0.6">
 		<title>Great Lakes Surf Forecast</title>
 	<style>
 		body
-			{text-align:center;background: rgb(0,0,66);background: linear-gradient(0deg, rgba(0,0,66,1) 30%, rgba(0,0,168,1) 50%);font-family:sans-serif;-webkit-text-size-adjust:100%;margin-top:40px;}
+			{text-align:center;background-color:#0000A8;font-family:sans-serif;-webkit-text-size-adjust:100%;margin:40px;-webkit-user-select:none;-moz-user-select:none;-ms-user-select: none;user-select:none;}
 		p 
 			{margin:0px;padding:0px;}
 		table
@@ -43,17 +43,19 @@
 		#row1
 			{vertical-align:middle;color:#7C7C7C;font-size:12px;font-weight:lighter;height:74px;}
 		#time_box
-			{width:85px;height:35px;background-color:#FFFFFF;border-radius:5px;border:0px solid #0000A8;padding:2px;}
+			{width:85px;height:32px;background-color:#FFFFFF;border-radius:5px;border:0px solid #0000A8;padding:2px;}
 		#footer_table
 			{font-size:14px;font-weight:lighter;background-color:#FFFFFF;border-radius:15px;border:0px solid #000000;padding:0px;margin-left:auto;margin-right:auto;text-align:center;border-collapse:collapse;}
 		#logo
-			{color:#FFFFFF;font-size:40px;font-weight:lighter;}
+			{color:#FFFFFF;font-size:37px;font-weight:lighter;}
 		#logo2
-			{color:#FFFFFF;font-size:40px;font-weight:bold;}
+			{color:#FFFFFF;font-size:38px;font-weight:bold;}
 		#wave_font
 			{font-size:16px;color:#000000;font-style:italic;font-weight:lighter;}
 		#footer_header
 			{font-weight:bold;font-size:20px;}
+		#footer_bold
+			{font-weight:bold;font-style:italic;}
 		#neptune
 			{font-size:40px;}
 		#boldspot
@@ -63,11 +65,27 @@
 		#arrow
 			{font-size:10px;}
 		#spot_click
-			{box-shadow: 0px 2px 5px #000000;background: rgb(220,220,230);background: linear-gradient(0deg, rgba(200,200,210,1) 0%, rgba(255,255,255,1) 50%);width:62px;height:56px;border-radius:15px;border:0px solid #000000;padding:2px;}
+			{box-shadow: 0px 2px 5px #000000;background: rgb(220,220,230);background: linear-gradient(0deg, rgba(200,200,210,1) 0%, rgba(255,255,255,1) 50%);width:62px;height:56px;border-radius:15px;border:0px solid #000000;padding:2px;-webkit-user-select:none;-moz-user-select:none;-ms-user-select: none;user-select:none;}
 		#spot_click:hover
-			{box-shadow: 0px 0px 0px #000000;background: rgb(0,0,255);color:#FFFFFF;}
-		
+			{box-shadow: 0px 0px 0px #000000;background: rgb(0,0,255);color:#FFFFFF;-webkit-user-select:none;-moz-user-select:none;-ms-user-select: none;user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select: none;user-select:none;}
+		#dotshift
+			{position:relative;left:2px;}
+		#btn-previous1, #btn-next1, #btn-reset1, #btn-previous2, #btn-next2, #btn-reset2, #btn-previous3, #btn-next3, #btn-reset3, #btn-previous4, #btn-next4, #btn-reset4, #btn-previous5, #btn-next5, #btn-reset5, #btn-previous6, #btn-next6, #btn-reset6, #btn-previous7, #btn-next7, #btn-reset7, #btn-previous8, #btn-next8, #btn-reset8, #btn-previous9, #btn-next9, #btn-reset9, #btn-previous10, #btn-next10, #btn-reset10 
+			{font-size: 30px;box-shadow: 0px 2px 5px #000000;background: rgb(220, 220, 230);background: linear-gradient(0deg, rgba(200, 200, 210, 1) 0%, rgba(255, 255, 255, 1) 50%);border-radius: 15px;border:0px solid #000000;padding: 20px;-webkit-user-select:none;-moz-user-select:none;-ms-user-select: none;user-select:none;}
+		#btn-previous1:hover, #btn-next1:hover, #btn-reset1:hover, #btn-previous2:hover, #btn-next2:hover, #btn-reset2:hover, #btn-previous3:hover, #btn-next3:hover, #btn-reset3:hover, #btn-previous4:hover, #btn-next4:hover, #btn-reset4:hover, #btn-previous5:hover, #btn-next5:hover, #btn-reset5:hover, #btn-previous6:hover, #btn-next6:hover, #btn-reset6:hover, #btn-previous7:hover, #btn-next7:hover, #btn-reset7:hover, #btn-previous8:hover, #btn-next8:hover, #btn-reset8:hover, #btn-previous9:hover, #btn-next9:hover, #btn-reset9:hover, #btn-previous10:hover, #btn-next10:hover, #btn-reset10:hover 			{box-shadow: 0px 0px 0px #000000;background:#0000FF;color:#FFFFFF;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;}	
 	</style>
+	<script>
+		(() => {
+			if (window.localStorage) {
+				if (!localStorage.getItem('reload')) {
+					localStorage['reload'] = true;
+					window.location.reload();
+				} else {
+					localStorage.removeItem('reload');
+				}
+			}
+		})();
+	</script>
 	<script>
 		function init () {	
 
@@ -76,29 +94,37 @@
 			
 			var pe_w=224
 			var pe_h=310
+			var er_w=0 
+			var er_h=0
 			var st_w=393 
 			var st_h=186
+			var lp_w=0 
+			var lp_h=0
 			var cl_w=676 
 			var cl_h=131
 			
-			var gb_w=429 
+			var gb_w=427 
 			var gb_h=459
-			var ki_w=440
-			var ki_h=334
-			var su_w=470
+			var bf_w=0 
+			var bf_h=0
+			var ki_w=435
+			var ki_h=340
+			var su_w=464
 			var su_h=285
 			var mn_w=390
 			var mn_h=160
-			var wa_w=590
-			var wa_h=282
+			var wa_w=586
+			var wa_h=281
 			
 			var ha_w=133
 			var ha_h=348
 			var to_w=205
 			var to_h=260
+			var oh_w=0 
+			var oh_h=0
 			var cg_w=402
-			var cg_h=186
-			var sb_w=524
+			var cg_h=187
+			var sb_w=520
 			var sb_h=188
 			
 			var aw_w=635
@@ -728,26 +754,22 @@
 			}
 		document.addEventListener('DOMContentLoaded', init)
 	</script>
-			
-	<script>
-		(() => {
-			if (window.localStorage) {
-				if (!localStorage.getItem('reload')) {
-					localStorage['reload'] = true;
-					window.location.reload();
-				} else {
-					localStorage.removeItem('reload');
-				}
-			}
-		})();
-	</script>
-			
 </head>
-
 <body>
-	
 	<br><span id="logo">Great </span><span id="logo2">Lakes.Surf</span><span id="logo"> Forecast</span>
-	<br><span id="time_til_update"><script>
+	<br><span id="time_til_update">
+		<span id="dotshift">
+			<svg height="10" width="10"><circle cx="6" cy="5" r="2"  fill="transparent" width="10" height="10">
+			<animate id="one"
+			attributeName="fill"
+			values="#ffffff;transparent"
+			begin="0s"
+			dur="0.9s"
+			repeatCount="indefinite"
+			/>
+		</circle>
+	</svg></span>
+		<script>
 		var d = new Date();
 		var h = d.getUTCHours();
 		var e = new Date();
@@ -786,25 +808,45 @@
 			</tr>
 			
 				<script>
-					for (var i = 1; i < 13; i++) {
+					for (var i = 1; i < 10; i++) {
 				document.write("<tr><td><div id=\"time_box\"><canvas width=50 height=2></canvas><canvas id=\"canvas_time_"+i+"\" width=55 height=12></canvas>");
 				document.write("<canvas width=50 height=5></canvas><canvas id=\"canvas_time2_"+i+"\"  width=85 height=12></canvas></div></td>");
 				document.write("<td><canvas width=12 height=10></canvas></td>");
-				document.write("<td><canvas id=\"canvas_pe_"+i+"\"  width=70 height=65></canvas></td>");
-		    	document.write("<td><canvas id=\"canvas_st_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_cl_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_gb_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_ki_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_su_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_mn_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_wa_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_ha_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_to_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_cg_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_sb_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_cb_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_tb_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_aw_"+i+"\"  width=70 height=65></canvas></td></tr>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/ewv+0"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_pe_"+i+"\"  width=70 height=65></canvas></a></td>");
+		    	document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/ewv+0"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_st_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/ewv+0"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_cl_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+0"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_gb_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+0"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_ki_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+0"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_su_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+0"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_mn_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+0"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_wa_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/owv+0"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_ha_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/owv+0"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_to_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/owv+0"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_cg_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/owv+0"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_sb_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/swv+0"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_cb_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/swv+0"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_tb_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/swv+0"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_aw_"+i+"\"  width=70 height=65></canvas></a></td></tr>");
+						}
+					for (var i = 10; i < 13; i++) {
+				document.write("<tr><td><div id=\"time_box\"><canvas width=50 height=2></canvas><canvas id=\"canvas_time_"+i+"\" width=55 height=12></canvas>");
+				document.write("<canvas width=50 height=5></canvas><canvas id=\"canvas_time2_"+i+"\"  width=85 height=12></canvas></div></td>");
+				document.write("<td><canvas width=12 height=10></canvas></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/ewv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_pe_"+i+"\"  width=70 height=65></canvas></a></td>");
+		    	document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/ewv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_st_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/ewv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_cl_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_gb_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_ki_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_su_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_mn_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_wa_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/owv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_ha_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/owv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_to_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/owv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_cg_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/owv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_sb_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/swv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_cb_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/swv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_tb_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/swv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_aw_"+i+"\"  width=70 height=65></canvas></a></td></tr>");
 						}
 				</script>
 						
@@ -833,21 +875,21 @@
 				document.write("<tr><td><div id=\"time_box\"><canvas width=50 height=2></canvas><canvas id=\"canvas_time_"+i+"\" width=55 height=12></canvas>");
 				document.write("<canvas width=50 height=5></canvas><canvas id=\"canvas_time2_"+i+"\"  width=85 height=12></canvas></div></td>");
 				document.write("<td><canvas width=12 height=10></canvas></td>");
-				document.write("<td><canvas id=\"canvas_pe_"+i+"\"  width=70 height=65></canvas></td>");
-		    	document.write("<td><canvas id=\"canvas_st_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_cl_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_gb_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_ki_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_su_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_mn_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_wa_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_ha_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_to_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_cg_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_sb_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_cb_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_tb_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_aw_"+i+"\"  width=70 height=65></canvas></td></tr>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/ewv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_pe_"+i+"\"  width=70 height=65></canvas></a></td>");
+		    	document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/ewv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_st_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/ewv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_cl_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_gb_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_ki_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_su_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_mn_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_wa_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/owv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_ha_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/owv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_to_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/owv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_cg_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/owv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_sb_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/swv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_cb_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/swv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_tb_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/swv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_aw_"+i+"\"  width=70 height=65></canvas></a></td></tr>");
 						}
 				</script>
 
@@ -876,21 +918,21 @@
 				document.write("<tr><td><div id=\"time_box\"><canvas width=50 height=2></canvas><canvas id=\"canvas_time_"+i+"\" width=55 height=12></canvas>");
 				document.write("<canvas width=50 height=5></canvas><canvas id=\"canvas_time2_"+i+"\"  width=85 height=12></canvas></div></td>");
 				document.write("<td><canvas width=12 height=10></canvas></td>");
-				document.write("<td><canvas id=\"canvas_pe_"+i+"\"  width=70 height=65></canvas></td>");
-		    	document.write("<td><canvas id=\"canvas_st_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_cl_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_gb_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_ki_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_su_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_mn_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_wa_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_ha_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_to_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_cg_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_sb_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_cb_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_tb_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_aw_"+i+"\"  width=70 height=65></canvas></td></tr>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/ewv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_pe_"+i+"\"  width=70 height=65></canvas></a></td>");
+		    	document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/ewv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_st_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/ewv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_cl_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_gb_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_ki_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_su_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_mn_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_wa_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/owv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_ha_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/owv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_to_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/owv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_cg_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/owv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_sb_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/swv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_cb_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/swv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_tb_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/swv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_aw_"+i+"\"  width=70 height=65></canvas></a></td></tr>");
 						}
 				</script>
 
@@ -919,21 +961,21 @@
 				document.write("<tr><td><div id=\"time_box\"><canvas width=50 height=2></canvas><canvas id=\"canvas_time_"+i+"\" width=55 height=12></canvas>");
 				document.write("<canvas width=50 height=5></canvas><canvas id=\"canvas_time2_"+i+"\"  width=85 height=12></canvas></div></td>");
 				document.write("<td><canvas width=12 height=10></canvas></td>");
-				document.write("<td><canvas id=\"canvas_pe_"+i+"\"  width=70 height=65></canvas></td>");
-		    	document.write("<td><canvas id=\"canvas_st_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_cl_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_gb_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_ki_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_su_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_mn_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_wa_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_ha_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_to_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_cg_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_sb_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_cb_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_tb_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_aw_"+i+"\"  width=70 height=65></canvas></td></tr>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/ewv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_pe_"+i+"\"  width=70 height=65></canvas></a></td>");
+		    	document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/ewv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_st_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/ewv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_cl_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_gb_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_ki_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_su_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_mn_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_wa_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/owv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_ha_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/owv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_to_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/owv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_cg_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/owv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_sb_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/swv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_cb_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/swv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_tb_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/swv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_aw_"+i+"\"  width=70 height=65></canvas></a></td></tr>");
 						}
 				</script>
 
@@ -962,21 +1004,21 @@
 				document.write("<tr><td><div id=\"time_box\"><canvas width=50 height=2></canvas><canvas id=\"canvas_time_"+i+"\" width=55 height=12></canvas>");
 				document.write("<canvas width=50 height=5></canvas><canvas id=\"canvas_time2_"+i+"\"  width=85 height=12></canvas></div></td>");
 				document.write("<td><canvas width=12 height=10></canvas></td>");
-				document.write("<td><canvas id=\"canvas_pe_"+i+"\"  width=70 height=65></canvas></td>");
-		    	document.write("<td><canvas id=\"canvas_st_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_cl_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_gb_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_ki_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_su_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_mn_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_wa_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_ha_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_to_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_cg_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_sb_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_cb_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_tb_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_aw_"+i+"\"  width=70 height=65></canvas></td></tr>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/ewv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_pe_"+i+"\"  width=70 height=65></canvas></a></td>");
+		    	document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/ewv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_st_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/ewv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_cl_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_gb_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_ki_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_su_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_mn_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_wa_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/owv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_ha_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/owv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_to_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/owv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_cg_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/owv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_sb_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/swv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_cb_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/swv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_tb_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/swv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_aw_"+i+"\"  width=70 height=65></canvas></a></td></tr>");
 						}
 				</script>
 
@@ -1006,21 +1048,21 @@
 				document.write("<tr><td><div id=\"time_box\"><canvas width=50 height=2></canvas><canvas id=\"canvas_time_"+i+"\" width=55 height=12></canvas>");
 				document.write("<canvas width=50 height=5></canvas><canvas id=\"canvas_time2_"+i+"\"  width=85 height=12></canvas></div></td>");
 				document.write("<td><canvas width=12 height=10></canvas></td>");
-				document.write("<td><canvas id=\"canvas_pe_"+i+"\"  width=70 height=65></canvas></td>");
-		    	document.write("<td><canvas id=\"canvas_st_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_cl_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_gb_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_ki_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_su_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_mn_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_wa_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_ha_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_to_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_cg_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_sb_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_cb_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_tb_"+i+"\"  width=70 height=65></canvas></td>");
-				document.write("<td><canvas id=\"canvas_aw_"+i+"\"  width=70 height=65></canvas></td></tr>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/ewv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_pe_"+i+"\"  width=70 height=65></canvas></a></td>");
+		    	document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/ewv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_st_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/ewv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_cl_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_gb_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_ki_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_su_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_mn_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/hwv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_wa_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/owv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_ha_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/owv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_to_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/owv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_cg_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/owv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_sb_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/swv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_cb_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/swv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_tb_"+i+"\"  width=70 height=65></canvas></a></td>");
+				document.write("<td><a href=\"https:\/\/www.glerl.noaa.gov\/res\/glcfs\/lakes\/cur\/swv+"+i+".gif\" target=\"_blank\"><canvas id=\"canvas_aw_"+i+"\"  width=70 height=65></canvas></a></td></tr>");
 						}
 				</script>					
 							
@@ -1045,6 +1087,262 @@
 		<table id="footer_table">
 			<tr>
 				<td>
+					<br><canvas width=840 height=10></canvas>
+					<br><img src="https://www.glerl.noaa.gov/res/glcfs/fcast/lwv+01.gif" id="picture9" alt="Great Lakes Waves">
+					<br><canvas width=50 height=40></canvas>
+					<br><span id="btn-previous9">Previous Hour</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<span id="btn-next9">&nbsp;&nbsp;Next Hour&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<span id="btn-reset9">&nbsp;&nbsp;Reset&nbsp;&nbsp;</span>
+					<br><canvas width=50 height=40></canvas>
+					<img src="https://www.glerl.noaa.gov/res/glcfs/fcast/lwn+01.gif" id="picture10" alt="Great Lakes Wind">
+					<br><canvas width=50 height=40></canvas>
+					<br><span id="btn-previous10">Previous Hour</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<span id="btn-next10">&nbsp;&nbsp;Next Hour&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<span id="btn-reset10">&nbsp;&nbsp;Reset&nbsp;&nbsp;</span>
+					<br><canvas width=50 height=40></canvas>
+					<img src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewv+01.gif" id="picture1" alt="Lake Erie Waves">
+					<br><canvas width=50 height=40></canvas>
+					<br><span id="btn-previous1">Previous Hour</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<span id="btn-next1">&nbsp;&nbsp;Next Hour&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<span id="btn-reset1">&nbsp;&nbsp;Reset&nbsp;&nbsp;</span>
+					<br><canvas width=50 height=40></canvas>
+					<img src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewn+02.gif" id="picture2" alt="Lake Erie Wind">
+					<br><canvas width=50 height=40></canvas>
+					<br><span id="btn-previous2">Previous Hour</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<span id="btn-next2">&nbsp;&nbsp;Next Hour&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<span id="btn-reset2">&nbsp;&nbsp;Reset&nbsp;&nbsp;</span>
+					<br><canvas width=50 height=40></canvas>
+					<img src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwv+01.gif" id="picture3" alt="Lake Huron Waves">
+					<br><canvas width=50 height=40></canvas>
+					<br><span id="btn-previous3">Previous Hour</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<span id="btn-next3">&nbsp;&nbsp;Next Hour&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<span id="btn-reset3">&nbsp;&nbsp;Reset&nbsp;&nbsp;</span>
+					<br><canvas width=50 height=40></canvas>
+					<img src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwn+02.gif" id="picture4" alt="Lake Huron Wind">
+					<br><canvas width=50 height=40></canvas>
+					<br><span id="btn-previous4">Previous Hour</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<span id="btn-next4">&nbsp;&nbsp;Next Hour&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<span id="btn-reset4">&nbsp;&nbsp;Reset&nbsp;&nbsp;</span>
+					<br><canvas width=50 height=40></canvas>
+					<img src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+01.gif" id="picture5" alt="Lake Ontario Waves">
+					<br><canvas width=50 height=40></canvas>
+					<br><span id="btn-previous5">Previous Hour</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<span id="btn-next5">&nbsp;&nbsp;Next Hour&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<span id="btn-reset5">&nbsp;&nbsp;Reset&nbsp;&nbsp;</span>
+					<br><canvas width=50 height=40></canvas>
+					<img src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/own+02.gif" id="picture6" alt="Lake Ontario Wind">
+					<br><canvas width=50 height=40></canvas>
+					<br><span id="btn-previous6">Previous Hour</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<span id="btn-next6">&nbsp;&nbsp;Next Hour&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<span id="btn-reset6">&nbsp;&nbsp;Reset&nbsp;&nbsp;</span>
+					<br><canvas width=50 height=40></canvas>
+					<img src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/swv+01.gif" id="picture7" alt="Lake Superior Waves">
+					<br><canvas width=50 height=40></canvas>
+					<br><span id="btn-previous7">Previous Hour</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<span id="btn-next7">&nbsp;&nbsp;Next Hour&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<span id="btn-reset7">&nbsp;&nbsp;Reset&nbsp;&nbsp;</span>
+					<br><canvas width=50 height=40></canvas>
+					<img src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/swn+02.gif" id="picture8" alt="Lake Superior Wind">
+					<br><canvas width=50 height=40></canvas>
+					<br><span id="btn-previous8">Previous Hour</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<span id="btn-next8">&nbsp;&nbsp;Next Hour&nbsp;&nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<span id="btn-reset8">&nbsp;&nbsp;Reset&nbsp;&nbsp;</span>
+					<br><canvas width=50 height=40></canvas>
+					<img src="https://www.glerl.noaa.gov/res/glcfs/lakes/cur/lice-00.gif" alt="Great Lakes Ice Cover">
+					<br><canvas width=50 height=40></canvas>
+					<br>
+				</td>
+			</tr>
+		</table>
+<script>
+		var counter = 1;
+		var counter2 = 2;
+
+		document.getElementById("btn-next1").addEventListener("click", changeImg);
+		document.getElementById("btn-previous1").addEventListener("click", changeImg2);
+		document.getElementById("btn-reset1").addEventListener("click", changeImgReset);
+		document.getElementById("btn-next2").addEventListener("click", changeImg);
+		document.getElementById("btn-previous2").addEventListener("click", changeImg2);
+		document.getElementById("btn-reset2").addEventListener("click", changeImgReset);
+		document.getElementById("btn-next3").addEventListener("click", changeImg);
+		document.getElementById("btn-previous3").addEventListener("click", changeImg2);
+		document.getElementById("btn-reset3").addEventListener("click", changeImgReset);
+		document.getElementById("btn-next4").addEventListener("click", changeImg);
+		document.getElementById("btn-previous4").addEventListener("click", changeImg2);
+		document.getElementById("btn-reset4").addEventListener("click", changeImgReset);
+		document.getElementById("btn-next5").addEventListener("click", changeImg);
+		document.getElementById("btn-previous5").addEventListener("click", changeImg2);
+		document.getElementById("btn-reset5").addEventListener("click", changeImgReset);
+		document.getElementById("btn-next6").addEventListener("click", changeImg);
+		document.getElementById("btn-previous6").addEventListener("click", changeImg2);
+		document.getElementById("btn-reset6").addEventListener("click", changeImgReset);
+		document.getElementById("btn-next7").addEventListener("click", changeImg);
+		document.getElementById("btn-previous7").addEventListener("click", changeImg2);
+		document.getElementById("btn-reset7").addEventListener("click", changeImgReset);
+		document.getElementById("btn-next8").addEventListener("click", changeImg);
+		document.getElementById("btn-previous8").addEventListener("click", changeImg2);
+		document.getElementById("btn-reset8").addEventListener("click", changeImgReset);
+		document.getElementById("btn-next9").addEventListener("click", changeImg);
+		document.getElementById("btn-previous9").addEventListener("click", changeImg2);
+		document.getElementById("btn-reset9").addEventListener("click", changeImgReset);
+		document.getElementById("btn-next10").addEventListener("click", changeImg);
+		document.getElementById("btn-previous10").addEventListener("click", changeImg2);
+		document.getElementById("btn-reset10").addEventListener("click", changeImgReset);
+
+function changeImg() {
+	if (counter >= 0 && counter < 9) {
+		counter++;
+		document.getElementById("picture1").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewv+0" + counter + ".gif";
+		document.getElementById("picture1").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewv+0" + counter + ".gif";
+		document.getElementById("picture3").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwv+0" + counter + ".gif";
+		document.getElementById("picture3").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwv+0" + counter + ".gif";
+		document.getElementById("picture5").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+0" + counter + ".gif";
+		document.getElementById("picture5").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+0" + counter + ".gif";
+		document.getElementById("picture7").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/swv+0" + counter + ".gif";
+		document.getElementById("picture7").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/swv+0" + counter + ".gif";
+		document.getElementById("picture9").src = "https://www.glerl.noaa.gov/res/glcfs/fcast/lwv+0" + counter + ".gif";
+		document.getElementById("picture9").alt = "https://www.glerl.noaa.gov/res/glcfs/fcast/lwv+0" + counter + ".gif";
+		counter2 = counter + 1;
+	if (counter2 == 10) {
+		document.getElementById("picture2").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewn+" + counter2 + ".gif";
+		document.getElementById("picture2").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewn+" + counter2 + ".gif";
+		document.getElementById("picture4").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwn+" + counter2 + ".gif";
+		document.getElementById("picture4").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwn+" + counter2 + ".gif";
+		document.getElementById("picture6").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/own+" + counter2 + ".gif";
+		document.getElementById("picture6").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/own+" + counter2 + ".gif";
+		document.getElementById("picture8").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/swn+" + counter2 + ".gif";
+		document.getElementById("picture8").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/swn+" + counter2 + ".gif";
+		document.getElementById("picture10").src = "https://www.glerl.noaa.gov/res/glcfs/fcast/lwn+0" + counter + ".gif";
+		document.getElementById("picture10").alt = "https://www.glerl.noaa.gov/res/glcfs/fcast/lwn+0" + counter + ".gif";
+	} else {
+		document.getElementById("picture2").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewn+0" + counter2 + ".gif";
+		document.getElementById("picture2").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewn+0" + counter2 + ".gif";
+		document.getElementById("picture4").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwn+0" + counter2 + ".gif";
+		document.getElementById("picture4").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwn+0" + counter2 + ".gif";
+		document.getElementById("picture6").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/own+0" + counter2 + ".gif";
+		document.getElementById("picture6").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/own+0" + counter2 + ".gif";
+		document.getElementById("picture8").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/swn+0" + counter2 + ".gif";
+		document.getElementById("picture8").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/swn+0" + counter2 + ".gif";
+		document.getElementById("picture10").src = "https://www.glerl.noaa.gov/res/glcfs/fcast/lwn+0" + counter + ".gif";
+		document.getElementById("picture10").alt = "https://www.glerl.noaa.gov/res/glcfs/fcast/lwn+0" + counter + ".gif";
+	}
+
+	} else if (counter > 8 && counter < 119) {
+		counter++;
+		document.getElementById("picture1").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewv+" + counter + ".gif";
+		document.getElementById("picture1").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewv+" + counter + ".gif";
+		document.getElementById("picture3").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwv+" + counter + ".gif";
+		document.getElementById("picture3").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwv+" + counter + ".gif";
+		document.getElementById("picture5").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+" + counter + ".gif";
+		document.getElementById("picture5").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+" + counter + ".gif";
+		document.getElementById("picture7").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/swv+" + counter + ".gif";
+		document.getElementById("picture7").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/swv+" + counter + ".gif";
+		document.getElementById("picture9").src = "https://www.glerl.noaa.gov/res/glcfs/fcast/lwv+" + counter + ".gif";
+		document.getElementById("picture9").alt = "https://www.glerl.noaa.gov/res/glcfs/fcast/lwv+" + counter + ".gif";
+		counter2++;
+		document.getElementById("picture2").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewn+" + counter2 + ".gif";
+		document.getElementById("picture2").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewn+" + counter2 + ".gif";
+		document.getElementById("picture4").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwn+" + counter2 + ".gif";
+		document.getElementById("picture4").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwn+" + counter2 + ".gif";
+		document.getElementById("picture6").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/own+" + counter2 + ".gif";
+		document.getElementById("picture6").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/own+" + counter2 + ".gif";
+		document.getElementById("picture8").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/swn+" + counter2 + ".gif";
+		document.getElementById("picture8").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/swn+" + counter2 + ".gif";
+		document.getElementById("picture10").src = "https://www.glerl.noaa.gov/res/glcfs/fcast/lwn+" + counter + ".gif";
+		document.getElementById("picture10").alt = "https://www.glerl.noaa.gov/res/glcfs/fcast/lwn+" + counter + ".gif";
+	}
+}
+
+function changeImg2() {
+	if (counter >= 2 && counter < 11) {
+		counter--;
+		document.getElementById("picture1").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewv+0" + counter + ".gif";
+		document.getElementById("picture1").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewv+0" + counter + ".gif";
+		document.getElementById("picture3").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwv+0" + counter + ".gif";
+		document.getElementById("picture3").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwv+0" + counter + ".gif";
+		document.getElementById("picture5").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+0" + counter + ".gif";
+		document.getElementById("picture5").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+0" + counter + ".gif";
+		document.getElementById("picture7").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/swv+0" + counter + ".gif";
+		document.getElementById("picture7").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/swv+0" + counter + ".gif";
+		document.getElementById("picture9").src = "https://www.glerl.noaa.gov/res/glcfs/fcast/lwv+0" + counter + ".gif";
+		document.getElementById("picture9").alt = "https://www.glerl.noaa.gov/res/glcfs/fcast/lwv+0" + counter + ".gif";
+		counter2--;
+		document.getElementById("picture2").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewn+0" + counter2 + ".gif";
+		document.getElementById("picture2").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewn+0" + counter2 + ".gif";
+		document.getElementById("picture4").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwn+0" + counter2 + ".gif";
+		document.getElementById("picture4").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwn+0" + counter2 + ".gif";
+		document.getElementById("picture6").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/own+0" + counter2 + ".gif";
+		document.getElementById("picture6").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/own+0" + counter2 + ".gif";
+		document.getElementById("picture8").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/swn+0" + counter2 + ".gif";
+		document.getElementById("picture8").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/swn+0" + counter2 + ".gif";
+		document.getElementById("picture10").src = "https://www.glerl.noaa.gov/res/glcfs/fcast/lwn+0" + counter + ".gif";
+		document.getElementById("picture10").alt = "https://www.glerl.noaa.gov/res/glcfs/fcast/lwn+0" + counter + ".gif";
+	}
+	if (counter2 == 10) {
+		document.getElementById("picture2").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewn+" + counter2 + ".gif";
+		document.getElementById("picture2").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewn+" + counter2 + ".gif";
+		document.getElementById("picture4").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwn+" + counter2 + ".gif";
+		document.getElementById("picture4").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwn+" + counter2 + ".gif";
+		document.getElementById("picture6").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/own+" + counter2 + ".gif";
+		document.getElementById("picture6").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/own+" + counter2 + ".gif";
+		document.getElementById("picture8").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/swn+" + counter2 + ".gif";
+		document.getElementById("picture8").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/swn+" + counter2 + ".gif";
+		document.getElementById("picture10").src = "https://www.glerl.noaa.gov/res/glcfs/fcast/lwn+0" + counter + ".gif";
+		document.getElementById("picture10").alt = "https://www.glerl.noaa.gov/res/glcfs/fcast/lwn+0" + counter + ".gif";
+	} else if (counter > 10 && counter < 120) {
+		counter--;
+		document.getElementById("picture1").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewv+" + counter + ".gif";
+		document.getElementById("picture1").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewv+" + counter + ".gif";
+		document.getElementById("picture3").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwv+" + counter + ".gif";
+		document.getElementById("picture3").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwv+" + counter + ".gif";
+		document.getElementById("picture5").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+" + counter + ".gif";
+		document.getElementById("picture5").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+" + counter + ".gif";
+		document.getElementById("picture7").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/swv+" + counter + ".gif";
+		document.getElementById("picture7").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/swv+" + counter + ".gif";
+		document.getElementById("picture9").src = "https://www.glerl.noaa.gov/res/glcfs/fcast/lwv+" + counter + ".gif";
+		document.getElementById("picture9").alt = "https://www.glerl.noaa.gov/res/glcfs/fcast/lwv+" + counter + ".gif";
+		counter2--;
+		document.getElementById("picture2").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewn+" + counter2 + ".gif";
+		document.getElementById("picture2").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewn+" + counter2 + ".gif";
+		document.getElementById("picture4").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwn+" + counter2 + ".gif";
+		document.getElementById("picture4").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwn+" + counter2 + ".gif";
+		document.getElementById("picture6").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/own+" + counter2 + ".gif";
+		document.getElementById("picture6").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/own+" + counter2 + ".gif";
+		document.getElementById("picture8").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/swn+" + counter2 + ".gif";
+		document.getElementById("picture8").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/swn+" + counter2 + ".gif";
+		document.getElementById("picture10").src = "https://www.glerl.noaa.gov/res/glcfs/fcast/lwn+" + counter + ".gif";
+		document.getElementById("picture10").alt = "https://www.glerl.noaa.gov/res/glcfs/fcast/lwn+" + counter + ".gif";
+	}
+}
+
+function changeImgReset() {
+	counter = 1;
+	document.getElementById("picture1").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewv+01.gif";
+	document.getElementById("picture1").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewv+01.gif";
+	document.getElementById("picture2").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewn+02.gif";
+	document.getElementById("picture2").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/ewn+02.gif";
+	document.getElementById("picture3").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwv+01.gif";
+	document.getElementById("picture3").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwv+01.gif";
+	document.getElementById("picture4").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwn+02.gif";
+	document.getElementById("picture4").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/hwn+02.gif";    
+	document.getElementById("picture5").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+01.gif";
+	document.getElementById("picture5").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/owv+01.gif";
+	document.getElementById("picture6").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/own+02.gif";
+	document.getElementById("picture6").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/own+02.gif";
+	document.getElementById("picture7").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/swv+01.gif";
+	document.getElementById("picture7").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/swv+01.gif";
+	document.getElementById("picture8").src = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/swn+02.gif";
+	document.getElementById("picture8").alt = "https://www.glerl.noaa.gov/res/glcfs/lakes/cur/swn+02.gif";
+	document.getElementById("picture9").src = "https://www.glerl.noaa.gov/res/glcfs/fcast/lwv+01.gif";
+	document.getElementById("picture9").alt = "https://www.glerl.noaa.gov/res/glcfs/fcast/lwv+01.gif";
+	document.getElementById("picture10").src = "https://www.glerl.noaa.gov/res/glcfs/fcast/lwn+01.gif";
+	document.getElementById("picture10").alt = "https://www.glerl.noaa.gov/res/glcfs/fcast/lwn+01.gif";
+}
+</script>
+		<br><canvas width=50 height=40></canvas>
+		<table id="footer_table">
+			<tr>
+				<td>
 				<canvas width=50 height=10></canvas>
 				<br><span id="footer_header">Updated At</span>
 				<br><canvas width=200 height=10></canvas>
@@ -1062,23 +1360,22 @@
 				<tr>
 					<td>
 			<br>
-			<canvas width=350 height=5></canvas>
+			<canvas width=400 height=5></canvas>
 			<br><span id="footer_header">Tips</span>
 			<canvas width=30 height=10></canvas>
 			Click on spot name for 
 			<br>wave period forecast
 			<canvas width=30 height=10></canvas>
-			For iOS App click Share Button
-			<br>then Add to Home Screen
-			<br><canvas width=30 height=30></canvas>
-			<br><span id="footer_header">Forecast Maps</span>
-			<canvas width=30 height=30></canvas>
-			<a href="https://www.glerl.noaa.gov/res/glcfs/glcfs.php?lake=e&ext=wv&type=F&hr=01">Lake Erie</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<a href="https://www.glerl.noaa.gov/res/glcfs/glcfs.php?lake=h&ext=wv&type=F&hr=01">Lake Huron</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<a href="https://www.glerl.noaa.gov/res/glcfs/glcfs.php?lake=o&ext=wv&type=F&hr=01">Lake Ontario</a>
+			Click on grid for 
+			<br>full forecast
+			<canvas width=30 height=10></canvas>
+			For iOS App click <span id="footer_bold">Share Button</span>
+			<br>then <span id="footer_bold">Add to Home Screen</span>
 			<br><canvas width=30 height=40></canvas>
 			<span id="footer_header">Additional Resources</span>
-			<canvas width=30 height=30></canvas>
+			<canvas width=30 height=20></canvas>
+			<br><a href="https://www.ndbc.noaa.gov/maps/EastGL.shtml">Buoys</a>
+			<br><canvas width=30 height=30></canvas>
 			<a href="https://surfthegreats.org/pages/faq">Surf The Greats</a>
 			<br><canvas width=30 height=20></canvas>
 			<br><a href="http://surfradar.info/index/myspots/0-37?SelectorTable_length=50&spot=portstanley&spot=portcolborne&spot=sarnia&spot=grandbend&spot=kincardine&spot=saublebeach&spot=wasaga&spot=fiftypoint&spot=hamilton&spot=toronto&spot=oshawa&spot=cobourg&spot=sandbankspp#surfData">Surf Radar</a>
@@ -1250,7 +1547,7 @@
 			<br><canvas width=30 height=30></canvas>
 			<br><a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA</a>
 			<br><canvas width=30 height=30></canvas>
-			<br>v0.8.5
+			<br>v0.8.6
 			<br><canvas width=30 height=20></canvas>
 			<br><span id="neptune">&#9798;</span>
 			<br><canvas width=30 height=30></canvas>
