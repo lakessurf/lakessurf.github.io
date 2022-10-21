@@ -12,7 +12,6 @@
 -GitHub for web hosting and source code control  
 -HTML/CSS/JS  
 -[GLCFS](https://www.glerl.noaa.gov/res/glcfs/glcfs.html) Data  
--Google Translate Proxy to prevent Windfinder iOS App from opening
   
   
 🎉Features🎉  
@@ -24,7 +23,8 @@
   
 📋Todo📋  
   
--add wind to forecast
+-add current time on display in a overlay
+-add forecast chart
   
   
 📝By Michal (Mike) Krupski  
